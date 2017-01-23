@@ -1,0 +1,10 @@
+services:
+    lmdi.multilinks.listener:
+        class: lmdi\multilinks\event\listener
+        arguments:
+            - '@user'
+            - '@config'
+            - '@template'
+        tags:
+            - { name: event.listener }
+
