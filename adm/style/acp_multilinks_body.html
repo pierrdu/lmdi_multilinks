@@ -4,118 +4,78 @@
 <h1>{L_ACP_MULTILINKS_TITLE}</h1>
 
 <!-- IF S_CONFIG_PAGE -->
-<form id="acp_autolinks" method="post" action="{R_ACTION}">
+<form id="acp_multilinks" method="post" action="{U_ACTION}">
 <fieldset>
 	<legend>{L_ACP_MULTILINKS_CONFIG}</legend>
 	<dl>
-		<dt><label>{L_RECURS_FEATURE}{L_COLON}</label><br />
-		<span>{L_RECURS_FEATURE_EXPLAIN}</span></dt>
+		<dt><label>{L_ACP_ML_PREPEND}{L_COLON}</label><br />
+		<span>{L_ACP_ML_PREPEND_EXPLAIN}</span></dt>
 		<dd>
-		<label><input type="radio" id="lmdi_recursive" name="lmdi_recursive"
-		value="1" class="radio" {ALLOW_FEATURE_YES}/>{L_YES}</label>
-		<label><input type="radio" id="lmdi_recursive" name="lmdi_recursive"
-		value="0" class="radio" {ALLOW_FEATURE_NO}/>{L_NO}</label>
+			<a href="{PP_ACTION}">{L_ML_ADD_LINK}</a>
 		</dd>
 	</dl>
-	<dl>
-		<dt><label>{L_MULTILINK_BLANK}{L_COLON}</label><br />
-		<span>{L_MULTILINK_BLANK_EXPLAIN}</span></dt>
-		<dd>
-		<label><input type="radio" id="lmdi_blank" name="lmdi_blank"
-		value="1" class="radio" {BLANK_TARGET_YES}/>{L_YES}</label>
-		<label><input type="radio" id="lmdi_blank" name="lmdi_blank"
-		value="0" class="radio" {BLANK_TARGET_NO}/>{L_NO}</label>
-		</dd>
-	</dl>
-	<p class="submit-buttons">
-		<input class="button1" type="submit" id="submit" name="config"
-		value="{L_SUBMIT}" />&nbsp;
-	</p>
-	{S_FORM_TOKEN}
-</fieldset>
-</form>
-<fieldset>
-	<legend>{L_LEGEND_ADD_TERM}</legend>
-	<dl>
-		<dt><label>{L_TERM_ADDITION}{L_COLON}</label><br />
-		<span>{L_TERM_ADDITION_EXPLAIN}</span></dt>
-		<dd>
-		<a href="{U_ADD}">{L_MULTILINK_ADD_A_NEW_WORD}</a>
-		</dd>
-	</dl>
-<table cellspacing="1">
+	<table cellspacing="1">
 	<thead>
 		<tr>
-			<th><a href='{TH_TERM}'>{L_MULTILINK_NAME}</a></th>
-			<th><a href='{TH_URL}'>{L_MULTILINK_URL}</a></th>
-			<th>{L_ACTION}</th>
+			<th>{L_ML_NAME}</th>
+			<th>{L_ML_URL}</th>
+			<th>{L_ML_BLANK}</th>
+			<th style="text-align: center;">{L_ACTION}</th>
 		</tr>
 	</thead>
 	<tbody>
-	<!-- BEGIN al -->
-		<!-- IF al.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
-			<td>{al.NAME}</td>
-			<td>{al.URL}</td>
-			<td>&nbsp;<a href="{al.U_EDIT}">{ICON_EDIT}</a>&nbsp;&nbsp;<a href="{al.U_DELETE}">{ICON_DELETE}</a>&nbsp;</td>
+	<!-- BEGIN mlpp -->
+		<!-- IF mlpp.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+			<td>{mlpp.NAME}</td>
+			<td>{mlpp.URL}</td>
+			<td>{mlpp.BLANK}</td>
+			<td class="actions" style="text-align: center;">
+				<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
+				<span class="up"><a href="{mlpp.U_MOVE_UP}" data-ajax="row_up">{ICON_MOVE_UP}</a></span>
+				<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
+				<span class="down"><a href="{mlpp.U_MOVE_DOWN}" data-ajax="row_down">{ICON_MOVE_DOWN}</a></span>
+				<a href="{mlpp.U_EDIT}">{ICON_EDIT}</a>
+				<a href="{mlpp.U_DELETE}" data-ajax="row_delete">{ICON_DELETE}</a>
+			</td>
 		</tr>
-	<!-- END al -->
+	<!-- END mlpp -->
 	</tbody>
-</table>
+	</table>
 </fieldset>
+
+<fieldset>
+	<dl>
+		<dt><label>{L_ACP_ML_APPEND}{L_COLON}</label><br />
+		<span>{L_ACP_ML_APPEND_EXPLAIN}</span></dt>
+	</dl>
+</fieldset>
+{S_FORM_TOKEN}
+</form>
 <!-- ENDIF -->
 
-<!-- IF S_ADD_TERM -->
-<form id="acp_alword" method="post" action="{A_ACTION}">
-	<legend>{L_LEGEND_ADD_TERM}</legend>
+<!-- IF S_ADD_URL -->
+<form id="acp_multilinks_add_url" method="post" action="{A_ACTION}">
 	<fieldset>
-		<legend>{L_ACP_MULTILINK_WORDS}</legend>
+		<legend>{L_ACP_MULTILINK_ADD_URL}<br />
+		<!-- IF S_ADD_PP -->{L_ACP_ADD_URL_PP}<!-- ELSE -->{L_ACP_ADD_URL_AP}<!-- ENDIF -->
+		</legend>
 		<!-- IF S_ERROR_FORM --><ul class="error"><!-- BEGIN error --><li>{error.ERROR_MSG}</li><!-- END error --></ul><!-- ENDIF -->
 		<dl>
-			<dt><label for="al_word">{L_ACP_MULTILINK_WORD}{L_COLON}</label><br />{L_ACP_MULTILINK_WORD_NOTE}</dt>
-			<dd><input type="text" name="al_word" id="al_word" value="{S_WORD}" /></dd>
+			<dt><label for="ml_anchor">{L_ACP_MULTILINK_ANCHOR}{L_COLON}</label><br />{L_ACP_ML_ANCHOR_EXPLAIN}</dt>
+			<dd><input type="text" name="ml_anchor" id="ml_anchor" value="{S_ANCHOR}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="al_url">{L_ACP_MULTILINK_URL}{L_COLON}</label><br />{L_ACP_MULTILINK_URL_NOTE}</dt>
-			<dd><input type="text" name="al_url" id="al_url" value="{S_URL}" /></dd>
+			<dt><label for="ml_url">{L_ACP_MULTILINK_URL}{L_COLON}</label><br />{L_ACP_ML_URL_EXPLAIN}</dt>
+			<dd><input type="text" name="ml_url" id="ml_url" value="{S_URL}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="ml_blank">{L_ACP_MULTILINK_BLANK}{L_COLON}</label><br />{L_ACP_ML_BLANK_EXPLAIN}</dt>
+			<dd><input type="checkbox" class="radio" name="ml_blank" value="1" /></dd>
 		</dl>
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
 			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
 		</p>
-	</fieldset>
-	{S_FORM_TOKEN}
-</form>
-<!-- ENDIF -->
-
-<!-- IF S_SET_FORUMS -->
-<form id="acp_alforums" method="post" action="{F_ACTION}">
-	<fieldset>
-	<legend>{L_AL_FORUM_SELECTION}</legend>
-	<table class="table1 zebra-table alphasort">
-		<thead>
-			<tr>
-				<th width="78%">{L_FORUMS}</th>
-				<th style="width:22%; white-space: nowrap; text-align: center";">{L_AL_NOSHOW_LIST}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<!-- BEGIN forums -->
-			<tr>
-				<td width="80%">
-				<strong><a href="{forums.U_FORUM}">{forums.FORUM_NAME}</a></strong>
-				</td>
-				<td style="width:20%; text-align: center;" title="{forums.FORUM_NAME}">
-				<input type="checkbox" class="radio" name="mark_multilinks_forum[]" value="{forums.FORUM_ID}" {forums.CHECKED_ENABLE_FORUM} />
-				</td>
-			</tr>
-			<!-- END forums -->
-		</tbody>
-	</table>
-	</fieldset>
-	<fieldset class="quick">
-		<p class="small"><a href="#" onclick="marklist('acp_alforums', 'mark_multilinks_forum', true); return false;">{L_MARK_ALL}</a> &bull; <a href="#" onclick="marklist('acp_alforums', 'mark_multilinks_forum', false); return false;">{L_UNMARK_ALL}</a></p>
-		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
 	</fieldset>
 {S_FORM_TOKEN}
 </form>

@@ -22,7 +22,6 @@ class listener implements EventSubscriberInterface
 	protected $config;
 
 
-
 	public function __construct(
 		\phpbb\user $user, 
 		\phpbb\config\config $config,
@@ -41,16 +40,18 @@ class listener implements EventSubscriberInterface
 		);
 	}
 
+
 	public function load_language ($event)
 	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-			'ext_name' => 'lmdi/links',
-			'lang_set' => 'links',
+			'ext_name' => 'lmdi/multilinks',
+			'lang_set' => 'acp_multilinks',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
 	} 
-	
+
+
 	public function build_url ($event)
 	{
 		if (version_compare ($this->config['version'], '3.2.x', '<'))
