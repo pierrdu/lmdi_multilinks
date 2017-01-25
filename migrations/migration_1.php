@@ -9,7 +9,6 @@
 
 namespace lmdi\multilinks\migrations;
 
-
 class migration_1 extends \phpbb\db\migration\migration
 {
 

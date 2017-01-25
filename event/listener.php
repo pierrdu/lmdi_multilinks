@@ -4,7 +4,7 @@
 * @package LMDI Multilinks
 * @copyright (c) 2017 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* 
+*
 */
 
 namespace lmdi\multilinks\event;
@@ -25,7 +25,7 @@ class listener implements EventSubscriberInterface
 
 
 	public function __construct(
-		\phpbb\user $user, 
+		\phpbb\user $user,
 		\phpbb\config\config $config,
 		\phpbb\config\db_text $config_text,
 		\phpbb\template\template $template)
@@ -53,7 +53,7 @@ class listener implements EventSubscriberInterface
 			'lang_set' => 'multilinks',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
-	} 
+	}
 
 
 	public function build_url ($event)
