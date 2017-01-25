@@ -1,15 +1,13 @@
 <!-- IF S_320 -->
-	<li data-last-responsive="true">
-		<a href="{U_INPN}" title="{T_INPN}" role="menuitem">
-		<i class="icon fa-info-circle fa-fw" aria-hidden="true"></i><span>{L_INPN}</span>
-		</a>
-	</li>
-	<li data-last-responsive="true">
-		<a href="{U_FE}" title="{T_FE}" role="menuitem">
-		<i class="icon fa-info-circle fa-fw" aria-hidden="true"></i><span>{L_FE}</span>
-		</a>
-	</li>
+	<!-- BEGIN mlpp -->
+		<li data-last-responsive="true">
+			<a href="{mlpp.URL}" title="{mlpp.TITLE}" role="menuitem" {mlpp.BLANK}>
+			<i class="icon fa-external-link fa-fw" aria-hidden="true"></i><span>{mlpp.NAME}</span>
+			</a>
+		</li>
+	<!-- END mlpp -->
 <!-- ELSE -->
-	<li class="small-icon icon-faq no-bulletin"><a href="{U_INPN}" title="{T_INPN}">{L_INPN}</a></li>
-	<li class="small-icon icon-faq no-bulletin"><a href="{U_FE}" title="{T_FE}">{L_FE}</a></li>
+	<!-- BEGIN mlpp -->
+		<li class="small-icon icon-faq no-bulletin"><a href="{mlpp.URL}" title="{mlpp.TITLE}" {BLANK}>{mlpp.NAME}</a></li>
+	<!-- END mlpp -->
 <!-- ENDIF -->
