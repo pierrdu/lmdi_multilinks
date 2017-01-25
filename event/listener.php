@@ -14,22 +14,26 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 
-	/* @var \phpbb\template\template */
-	protected $template;
 	/* @var \phpbb\user */
 	protected $user;
 	/* @var \phpbb\config\config */
 	protected $config;
+	/** @var \phpbb\config\config_text */
+	protected $config_text;
+	/* @var \phpbb\template\template */
+	protected $template;
 
 
 	public function __construct(
 		\phpbb\user $user, 
 		\phpbb\config\config $config,
+		\phpbb\config\db_text $config_text,
 		\phpbb\template\template $template)
 	{
-		$this->template = $template;
 		$this->user = $user;
 		$this->config = $config;
+		$this->config_text = $config_text;
+		$this->template = $template;
 	}
 
 	static public function getSubscribedEvents ()
@@ -46,7 +50,7 @@ class listener implements EventSubscriberInterface
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
 			'ext_name' => 'lmdi/multilinks',
-			'lang_set' => 'acp_multilinks',
+			'lang_set' => 'multilinks',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
 	} 
@@ -62,13 +66,35 @@ class listener implements EventSubscriberInterface
 		{
 			$mlinks_class = 1;
 		}
+		$links = $this->config_text->get ('lmdi_multilinks_pp');
+		$rows = json_decode ($links, true);
+		$nb = count ($rows);
+		for ($i = 0; $i < $nb; $i++)
+		{
+			$row = $rows[$i];
+			$this->template->assign_block_vars('mlpp', array(
+				'NAME'			=> $row['anchor'],
+				'TITLE'			=> $row['title'],
+				'URL'			=> $row['url'],
+				'BLANK'			=> $row['blank']==true ? 'target="_blank"' : '',
+				));
+		}
+
+		$links = $this->config_text->get ('lmdi_multilinks_ap');
+		$rows = json_decode ($links, true);
+		$nb = count ($rows);
+		for ($i = 0; $i < $nb; $i++)
+		{
+			$row = $rows[$i];
+			$this->template->assign_block_vars('mlap', array(
+				'NAME'			=> $row['anchor'],
+				'TITLE'			=> $row['title'],
+				'URL'			=> $row['url'],
+				'BLANK'			=> $row['blank']==true ? 'target="_blank"' : '',
+				));
+		}
+
 		$this->template->assign_vars(array(
-			'U_INPN'	=> "http://inpn.mnhn.fr/accueil/recherche-de-donnees/especes/",
-			'U_FE'	=> "http://www.faunaeur.org/?no_redirect=1",
-			'L_INPN'	=> $this->user->lang['LINPN'],
-			'L_FE'	=> $this->user->lang['LFE'],
-			'T_INPN'	=> $this->user->lang['TINPN'],
-			'T_FE'	=> $this->user->lang['TFE'],
 			'S_320'	=> $mlinks_class,
 		));
 	}

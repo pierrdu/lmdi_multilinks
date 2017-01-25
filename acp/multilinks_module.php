@@ -15,15 +15,14 @@ class multilinks_module {
 
 	public function main ($id, $mode)
 	{
-		global $db, $user, $template, $cache, $request;
-		global $config, $phpbb, $phpbb_container;
+		global $user, $template, $request, $phpbb_container;
 
 		$form_name = 'acp_multilinks';
 
 		$config_text = $phpbb_container->get('config_text');
 		$user->add_lang_ext ('lmdi/multilinks', 'acp_multilinks');
 		$this->tpl_name = 'acp_multilinks_body';
-		$this->page_title = $user->lang('ACP_MULTILINKS_TITLE');
+		$this->page_title = $user->lang['ACP_MULTILINKS_TITLE'];
 
 		$action = $request->variable ('action', '');
 		$submit = $request->variable ('submit', '');
@@ -34,16 +33,16 @@ class multilinks_module {
 			{
 				case 'add_pp' :
 					$action = 'save_pp';
-					break;
+				break;
 				case 'edit_pp' :
 					$action = 'saved_pp';
-					break;
+				break;
 				case 'add_ap' :
 					$action = 'save_ap';
-					break;
+				break;
 				case 'edit_ap' :
 					$action = 'saved_ap';
-					break;
+				break;
 			}
 		}
 		if ($action)
@@ -63,7 +62,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_pp', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Item move down
 				case 'move_down_pp' :
 					$id = $request->variable('id', -1);
@@ -76,7 +75,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_pp', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Item deletion
 				case 'delete_pp' :
 					$id = $request->variable('id', -1);
@@ -88,7 +87,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_pp', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Item edition
 				case 'edit_pp' :
 					$id = $request->variable('id', -1);
@@ -105,7 +104,7 @@ class multilinks_module {
 						'S_ADD_URL'		=> true,
 						'S_ADD_PP'		=> true,
 						));
-					break;
+				break;
 				// New item creation
 				case 'add_pp' :
 					$template->assign_vars(array(
@@ -118,7 +117,7 @@ class multilinks_module {
 						'S_ADD_URL'		=> true,
 						'S_ADD_PP'		=> true,
 						));
-					break;
+				break;
 				// New item saving
 				case 'save_pp' :
 					if (!check_form_key($form_name))
@@ -135,7 +134,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_pp', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Edited item saving
 				case 'saved_pp' :
 					if (!check_form_key($form_name))
@@ -154,7 +153,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_pp', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Appended URLs
 				// Item move up
 				case 'move_up_ap' :
@@ -168,7 +167,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_ap', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Item move down
 				case 'move_down_ap' :
 					$id = $request->variable('id', -1);
@@ -181,7 +180,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_ap', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Item deletion
 				case 'delete_ap' :
 					$id = $request->variable('id', -1);
@@ -193,7 +192,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_ap', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Item edition
 				case 'edit_ap' :
 					$id = $request->variable('id', -1);
@@ -210,7 +209,7 @@ class multilinks_module {
 						'S_ADD_URL'		=> true,
 						'S_ADD_AP'		=> true,
 						));
-					break;
+				break;
 				// New item creation
 				case 'add_ap' :
 					$template->assign_vars(array(
@@ -223,7 +222,7 @@ class multilinks_module {
 						'S_ADD_URL'		=> true,
 						'S_ADD_AP'		=> true,
 						));
-					break;
+				break;
 				// New item saving
 				case 'save_ap' :
 					if (!check_form_key($form_name))
@@ -240,7 +239,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_ap', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 				// Edited item saving
 				case 'saved_ap' :
 					if (!check_form_key($form_name))
@@ -259,7 +258,7 @@ class multilinks_module {
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_ap', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-					break;
+				break;
 			}
 		}
 		else
