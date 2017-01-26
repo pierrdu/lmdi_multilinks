@@ -45,6 +45,7 @@ class multilinks_module {
 				break;
 			}
 		}
+		// var_dump ($action);
 		if ($action)
 		{
 			switch ($action)
@@ -59,6 +60,7 @@ class multilinks_module {
 					$row1 = $rows[$id];
 					$rows[$id-1] = $row1;
 					$rows[$id] = $row0;
+					$rows = array_values ($rows);
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_pp', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
@@ -72,21 +74,34 @@ class multilinks_module {
 					$row1 = $rows[$id];
 					$rows[$id+1] = $row1;
 					$rows[$id] = $row0;
+					$rows = array_values ($rows);
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_pp', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 				break;
 				// Item deletion
 				case 'delete_pp' :
-					$id = $request->variable('id', -1);
-					$links = $config_text->get ('lmdi_multilinks_pp');
-					$rows = json_decode ($links, true);
-					unset ($rows[$id]);
-					// array_slice ($rows, $id, 1);
-					$rows = array_values ($rows);
-					$links = json_encode ($rows);
-					$config_text->set ('lmdi_multilinks_pp', $links);
-					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					if (confirm_box(true))
+					{
+						$id = $request->variable('id', -1);
+						$links = $config_text->get ('lmdi_multilinks_pp');
+						$rows = json_decode ($links, true);
+						unset ($rows[$id]);
+						// array_slice ($rows, $id, 1);
+						$rows = array_values ($rows);
+						$links = json_encode ($rows);
+						$config_text->set ('lmdi_multilinks_pp', $links);
+						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					}
+					else
+					{
+						confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields(array(
+							'bbcode'	=> $bbcode_id,
+							'i'			=> $id,
+							'mode'		=> $mode,
+							'action'	=> $action))
+						);
+					}
 				break;
 				// Item edition
 				case 'edit_pp' :
@@ -164,6 +179,7 @@ class multilinks_module {
 					$row1 = $rows[$id];
 					$rows[$id-1] = $row1;
 					$rows[$id] = $row0;
+					$rows = array_values ($rows);
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_ap', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
@@ -177,21 +193,34 @@ class multilinks_module {
 					$row1 = $rows[$id];
 					$rows[$id+1] = $row1;
 					$rows[$id] = $row0;
+					$rows = array_values ($rows);
 					$links = json_encode ($rows);
 					$config_text->set ('lmdi_multilinks_ap', $links);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 				break;
 				// Item deletion
 				case 'delete_ap' :
-					$id = $request->variable('id', -1);
-					$links = $config_text->get ('lmdi_multilinks_ap');
-					$rows = json_decode ($links, true);
-					unset ($rows[$id]);
-					// array_slice ($rows, $id, 1);
-					$rows = array_values ($rows);
-					$links = json_encode ($rows);
-					$config_text->set ('lmdi_multilinks_ap', $links);
-					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					if (confirm_box(true))
+					{
+						$id = $request->variable('id', -1);
+						$links = $config_text->get ('lmdi_multilinks_ap');
+						$rows = json_decode ($links, true);
+						unset ($rows[$id]);
+						// array_slice ($rows, $id, 1);
+						$rows = array_values ($rows);
+						$links = json_encode ($rows);
+						$config_text->set ('lmdi_multilinks_ap', $links);
+						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					}
+					else
+					{
+						confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields(array(
+							'bbcode'	=> $bbcode_id,
+							'i'			=> $id,
+							'mode'		=> $mode,
+							'action'	=> $action))
+						);
+					}
 				break;
 				// Item edition
 				case 'edit_ap' :

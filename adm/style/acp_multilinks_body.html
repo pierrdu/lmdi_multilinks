@@ -18,8 +18,9 @@
 	<thead>
 		<tr>
 			<th>{L_ML_NAME}</th>
+			<th>{L_ML_TITLE}</th>
 			<th>{L_ML_URL}</th>
-			<th>{L_ML_BLANK}</th>
+			<th style="text-align: center;">{L_ML_BLANK}</th>
 			<th style="text-align: center;">{L_ACTION}</th>
 		</tr>
 	</thead>
@@ -27,15 +28,16 @@
 	<!-- BEGIN mlpp -->
 		<!-- IF mlpp.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
 			<td>{mlpp.NAME}</td>
+			<td>{mlpp.TITLE}</td>
 			<td>{mlpp.URL}</td>
-			<td>{mlpp.BLANK}</td>
+			<td style="text-align: center;">{mlpp.BLANK}</td>
 			<td class="actions" style="text-align: center;">
 				<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
-				<span class="up"><a href="{mlpp.U_MOVE_UP}" data-ajax="row_up">{ICON_MOVE_UP}</a></span>
+				<span class="up"><a href="{mlpp.U_PP_MOVE_UP}">{ICON_MOVE_UP}</a></span>
 				<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
-				<span class="down"><a href="{mlpp.U_MOVE_DOWN}" data-ajax="row_down">{ICON_MOVE_DOWN}</a></span>
-				<a href="{mlpp.U_EDIT}">{ICON_EDIT}</a>
-				<a href="{mlpp.U_DELETE}" data-ajax="row_delete">{ICON_DELETE}</a>
+				<span class="down"><a href="{mlpp.U_PP_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
+				<a href="{mlpp.U_PP_EDIT}">{ICON_EDIT}</a>
+				<a href="{mlpp.U_PP_DELETE}">{ICON_DELETE}</a>
 			</td>
 		</tr>
 	<!-- END mlpp -->
@@ -47,7 +49,39 @@
 	<dl>
 		<dt><label>{L_ACP_ML_APPEND}{L_COLON}</label><br />
 		<span>{L_ACP_ML_APPEND_EXPLAIN}</span></dt>
+		<dd>
+			<a href="{AP_ACTION}">{L_ML_ADD_LINK}</a>
+		</dd>
 	</dl>
+	<table cellspacing="1">
+	<thead>
+		<tr>
+			<th>{L_ML_NAME}</th>
+			<th>{L_ML_TITLE}</th>
+			<th>{L_ML_URL}</th>
+			<th style="text-align: center;">{L_ML_BLANK}</th>
+			<th style="text-align: center;">{L_ACTION}</th>
+		</tr>
+	</thead>
+	<tbody>
+	<!-- BEGIN mlap -->
+		<!-- IF mlap.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+			<td>{mlap.NAME}</td>
+			<td>{mlap.TITLE}</td>
+			<td>{mlap.URL}</td>
+			<td style="text-align: center;">{mlap.BLANK}</td>
+			<td class="actions" style="text-align: center;">
+				<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
+				<span class="up"><a href="{mlap.U_AP_MOVE_UP}">{ICON_MOVE_UP}</a></span>
+				<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
+				<span class="down"><a href="{mlap.U_AP_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
+				<a href="{mlap.U_AP_EDIT}">{ICON_EDIT}</a>
+				<a href="{mlap.U_AP_DELETE}">{ICON_DELETE}</a>
+			</td>
+		</tr>
+	<!-- END mlap -->
+	</tbody>
+	</table>
 </fieldset>
 {S_FORM_TOKEN}
 </form>
@@ -62,16 +96,21 @@
 		<!-- IF S_ERROR_FORM --><ul class="error"><!-- BEGIN error --><li>{error.ERROR_MSG}</li><!-- END error --></ul><!-- ENDIF -->
 		<dl>
 			<dt><label for="ml_anchor">{L_ACP_MULTILINK_ANCHOR}{L_COLON}</label><br />{L_ACP_ML_ANCHOR_EXPLAIN}</dt>
-			<dd><input type="text" name="ml_anchor" id="ml_anchor" value="{S_ANCHOR}" /></dd>
+			<dd><input type="text" name="ml_anchor" id="ml_anchor" value="{ANCHOR}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="ml_title">{L_ACP_MULTILINK_TITLE}{L_COLON}</label><br />{L_ACP_ML_TITLE_EXPLAIN}</dt>
+			<dd><input type="text" name="ml_title" id="ml_title" value="{TITLE}" /></dd>
 		</dl>
 		<dl>
 			<dt><label for="ml_url">{L_ACP_MULTILINK_URL}{L_COLON}</label><br />{L_ACP_ML_URL_EXPLAIN}</dt>
-			<dd><input type="text" name="ml_url" id="ml_url" value="{S_URL}" /></dd>
+			<dd><input type="text" name="ml_url" id="ml_url" value="{URL}" /></dd>
 		</dl>
 		<dl>
 			<dt><label for="ml_blank">{L_ACP_MULTILINK_BLANK}{L_COLON}</label><br />{L_ACP_ML_BLANK_EXPLAIN}</dt>
-			<dd><input type="checkbox" class="radio" name="ml_blank" value="1" /></dd>
+			<dd><input type="checkbox" class="radio" id="ml_blank" name="ml_blank" value="1" {BLANK} /></dd>
 		</dl>
+		<input type="hidden" name="id" value="{URL_ID}">
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
 			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
