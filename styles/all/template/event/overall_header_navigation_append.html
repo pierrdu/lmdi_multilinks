@@ -2,12 +2,12 @@
 	<!-- BEGIN mlap -->
 		<li data-last-responsive="true">
 			<a href="{mlap.URL}" title="{mlap.TITLE}" role="menuitem" {mlap.BLANK}>
-			<i class="icon fa-external-link fa-fw" aria-hidden="true"></i><span>{mlap.NAME}</span>
+			<i class="icon {mlap.ICON} fa-fw" aria-hidden="true"></i><span>{mlap.NAME}</span>
 			</a>
 		</li>
 	<!-- END mlap -->
 <!-- ELSE -->
 	<!-- BEGIN mlap -->
-		<li class="small-icon icon-faq no-bulletin"><a href="{mlap.URL}" title="{mlap.TITLE}" {mlap.BLANK}>{mlap.NAME}</a></li>
+		<li class="small-icon {mlap.ICON} no-bulletin"><a href="{mlap.URL}" title="{mlap.TITLE}" {mlap.BLANK}>{mlap.NAME}</a></li>
 	<!-- END mlap -->
 <!-- ENDIF -->

@@ -60,11 +60,11 @@ class listener implements EventSubscriberInterface
 	{
 		if (version_compare ($this->config['version'], '3.2.x', '<'))
 		{
-			$mlinks_class = 0;
+			$mlinks_320 = 0;
 		}
 		else
 		{
-			$mlinks_class = 1;
+			$mlinks_320 = 1;
 		}
 		$links = $this->config_text->get ('lmdi_multilinks_pp');
 		$rows = json_decode ($links, true);
@@ -77,6 +77,7 @@ class listener implements EventSubscriberInterface
 				'TITLE'			=> $row['title'],
 				'URL'			=> $row['url'],
 				'BLANK'			=> $row['blank']==true ? 'target="_blank"' : '',
+				'ICON'			=> $row['icon'],
 				));
 		}
 
@@ -91,11 +92,12 @@ class listener implements EventSubscriberInterface
 				'TITLE'			=> $row['title'],
 				'URL'			=> $row['url'],
 				'BLANK'			=> $row['blank']==true ? 'target="_blank"' : '',
+				'ICON'			=> $row['icon'],
 				));
 		}
 
 		$this->template->assign_vars(array(
-			'S_320'	=> $mlinks_class,
+			'S_320'	=> $mlinks_320,
 		));
 	}
 }
