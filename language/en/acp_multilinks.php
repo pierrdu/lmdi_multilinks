@@ -44,5 +44,4 @@ $lang = array_merge($lang, array(
 	'ACP_ML_BLANK_EXPLAIN'	=> 'Check this box if you want the link to open in a new window.',
 	'ACP_ML_FA_EXPLAIN'		=> 'Enter here the name of the fontawesome icon to be used. By default, the extension uses fa-external-link. To look for other icon names, see the file assets/css/font-awesome.min.css.',
 	'ACP_ML_ICO_EXPLAIN'	=> 'Enter here the name ofthe legacy icon to be used. By default, the extension uses icon-faq. See also icon-acp, icon-mcp, icon-search, etc.',
-	
 ));

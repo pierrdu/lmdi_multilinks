@@ -56,31 +56,47 @@ class multilinks_module {
 			{
 				// Item move up
 				case 'move_up' :
-					$id = $request->variable('id', -1);
-					$links = $config_text->get ('lmdi_multilinks_'.$ppap);
-					$rows = json_decode ($links, true);
-					$row0 = $rows[$id-1];
-					$row1 = $rows[$id];
-					$rows[$id-1] = $row1;
-					$rows[$id] = $row0;
-					$rows = array_values ($rows);
-					$links = json_encode ($rows);
-					$config_text->set ('lmdi_multilinks_'.$ppap, $links);
-					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					$token = $request->variable ('hash', '');
+					if (check_link_hash ($token, $form_name))
+					{
+						$id = $request->variable('id', -1);
+						$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+						$rows = json_decode ($links, true);
+						$row0 = $rows[$id-1];
+						$row1 = $rows[$id];
+						$rows[$id-1] = $row1;
+						$rows[$id] = $row0;
+						$rows = array_values ($rows);
+						$links = json_encode ($rows);
+						$config_text->set ('lmdi_multilinks_'.$ppap, $links);
+						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					}
+					else
+					{
+						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
+					}
 				break;
 				// Item move down
 				case 'move_down' :
-					$id = $request->variable('id', -1);
-					$links = $config_text->get ('lmdi_multilinks_'.$ppap);
-					$rows = json_decode ($links, true);
-					$row0 = $rows[$id+1];
-					$row1 = $rows[$id];
-					$rows[$id+1] = $row1;
-					$rows[$id] = $row0;
-					$rows = array_values ($rows);
-					$links = json_encode ($rows);
-					$config_text->set ('lmdi_multilinks_'.$ppap, $links);
-					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					$token = $request->variable ('hash', '');
+					if (check_link_hash ($token, $form_name))
+					{
+						$id = $request->variable('id', -1);
+						$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+						$rows = json_decode ($links, true);
+						$row0 = $rows[$id+1];
+						$row1 = $rows[$id];
+						$rows[$id+1] = $row1;
+						$rows[$id] = $row0;
+						$rows = array_values ($rows);
+						$links = json_encode ($rows);
+						$config_text->set ('lmdi_multilinks_'.$ppap, $links);
+						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					}
+					else
+					{
+						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
+					}
 				break;
 				// Item deletion
 				case 'delete' :
@@ -217,8 +233,8 @@ class multilinks_module {
 					'TITLE'			=> $row['title'],
 					'URL'			=> $row['url'],
 					'BLANK'			=> $row['blank']==true ? $user->lang['YES'] : $user->lang['NO'],
-					'U_PP_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;ppap=pp&amp;id=' . $i,
-					'U_PP_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;ppap=pp&amp;id=' . $i,
+					'U_PP_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;ppap=pp&amp;id=' . $i.'&amp;hash=' . generate_link_hash($form_name),
+					'U_PP_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;ppap=pp&amp;id=' . $i . '&amp;hash=' . generate_link_hash($form_name),
 					'U_PP_EDIT'		=> $this->u_action . '&amp;action=edit&amp;ppap=pp&amp;id=' . $i,
 					'U_PP_DELETE'		=> $this->u_action . '&amp;action=delete&amp;ppap=pp&amp;id=' . $i,
 					));
@@ -235,8 +251,8 @@ class multilinks_module {
 					'TITLE'			=> $row['title'],
 					'URL'			=> $row['url'],
 					'BLANK'			=> $row['blank']==true ? $user->lang['YES'] : $user->lang['NO'],
-					'U_AP_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;ppap=ap&amp;id=' . $i,
-					'U_AP_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;ppap=ap&amp;id=' . $i,
+					'U_AP_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;ppap=ap&amp;id='.$i.'&amp;hash=' . generate_link_hash($form_name),
+					'U_AP_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;ppap=ap&amp;id=' . $i . '&amp;hash=' . generate_link_hash($form_name),
 					'U_AP_EDIT'		=> $this->u_action . '&amp;action=edit&amp;ppap=ap&amp;id=' . $i,
 					'U_AP_DELETE'		=> $this->u_action . '&amp;action=delete&amp;ppap=ap&amp;id=' . $i,
 					));
