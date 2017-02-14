@@ -25,8 +25,6 @@ class multilinks_module {
 		$this->page_title = $user->lang['ACP_MULTILINKS_TITLE'];
 
 		$action = $request->variable ('action', '');
-		$submit = $request->variable ('submit', '');
-		$ppap = $request->variable ('ppap', '');	// 'pp' = prepend, 'ap' = append
 
 		if (version_compare ($config['version'], '3.2.x', '<'))
 		{
@@ -37,7 +35,7 @@ class multilinks_module {
 			$mlinks_320 = 1;
 		}
 
-		if ($submit)
+		if ($request->is_set_post('submit'))
 		{
 			switch ($action)
 			{
@@ -52,6 +50,7 @@ class multilinks_module {
 
 		if ($action)
 		{
+			$ppap = $request->variable ('ppap', '');	// 'pp' = prepend, 'ap' = append
 			switch ($action)
 			{
 				// Item move up
@@ -115,7 +114,6 @@ class multilinks_module {
 					else
 					{
 						confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields(array(
-							'bbcode' => $bbcode_id,
 							'i' => $id,
 							'mode' => $mode,
 							'action' => $action))
@@ -222,42 +220,8 @@ class multilinks_module {
 		}
 		else
 		{
-			$links = $config_text->get ('lmdi_multilinks_pp');
-			$rows = json_decode ($links, true);
-			$nb = count ($rows);
-			for ($i = 0; $i < $nb; $i++)
-			{
-				$row = $rows[$i];
-				$template->assign_block_vars('mlpp', array(
-					'NAME'			=> $row['anchor'],
-					'TITLE'			=> $row['title'],
-					'URL'			=> $row['url'],
-					'BLANK'			=> $row['blank']==true ? $user->lang['YES'] : $user->lang['NO'],
-					'U_PP_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;ppap=pp&amp;id=' . $i.'&amp;hash=' . generate_link_hash($form_name),
-					'U_PP_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;ppap=pp&amp;id=' . $i . '&amp;hash=' . generate_link_hash($form_name),
-					'U_PP_EDIT'		=> $this->u_action . '&amp;action=edit&amp;ppap=pp&amp;id=' . $i,
-					'U_PP_DELETE'		=> $this->u_action . '&amp;action=delete&amp;ppap=pp&amp;id=' . $i,
-					));
-			}
-
-			$links = $config_text->get ('lmdi_multilinks_ap');
-			$rows = json_decode ($links, true);
-			$nb = count ($rows);
-			for ($i = 0; $i < $nb; $i++)
-			{
-				$row = $rows[$i];
-				$template->assign_block_vars('mlap', array(
-					'NAME'			=> $row['anchor'],
-					'TITLE'			=> $row['title'],
-					'URL'			=> $row['url'],
-					'BLANK'			=> $row['blank']==true ? $user->lang['YES'] : $user->lang['NO'],
-					'U_AP_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;ppap=ap&amp;id='.$i.'&amp;hash=' . generate_link_hash($form_name),
-					'U_AP_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;ppap=ap&amp;id=' . $i . '&amp;hash=' . generate_link_hash($form_name),
-					'U_AP_EDIT'		=> $this->u_action . '&amp;action=edit&amp;ppap=ap&amp;id=' . $i,
-					'U_AP_DELETE'		=> $this->u_action . '&amp;action=delete&amp;ppap=ap&amp;id=' . $i,
-					));
-			}
-
+			$this->assign_block_vars ('lmdi_multilinks_pp', 'mlpp');
+			$this->assign_block_vars ('lmdi_multilinks_ap', 'mlap');
 			$template->assign_vars(array(
 				'PP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=pp',
 				'AP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=ap',
@@ -268,4 +232,24 @@ class multilinks_module {
 		add_form_key ($form_name);
 	}
 
+	public function assign_block_vars ($config_text, $block)
+	{
+		$links = $config_text->get ($config_text);
+		$rows = json_decode ($links, true);
+		$nb = count ($rows);
+		for ($i = 0; $i < $nb; $i++)
+		{
+			$row = $rows[$i];
+			$template->assign_block_vars($block, array(
+				'NAME'			=> $row['anchor'],
+				'TITLE'			=> $row['title'],
+				'URL'			=> $row['url'],
+				'BLANK'			=> $row['blank']==true ? $user->lang['YES'] : $user->lang['NO'],
+				'U_PP_MOVE_UP'		=> $this->u_action . '&amp;action=move_up&amp;ppap=pp&amp;id=' . $i.'&amp;hash=' . generate_link_hash($form_name),
+				'U_PP_MOVE_DOWN'	=> $this->u_action . '&amp;action=move_down&amp;ppap=pp&amp;id=' . $i . '&amp;hash=' . generate_link_hash($form_name),
+				'U_PP_EDIT'		=> $this->u_action . '&amp;action=edit&amp;ppap=pp&amp;id=' . $i,
+				'U_PP_DELETE'		=> $this->u_action . '&amp;action=delete&amp;ppap=pp&amp;id=' . $i,
+				));
+		}
+	}
 }
