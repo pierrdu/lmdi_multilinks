@@ -24,7 +24,6 @@ $lang = array_merge($lang, array(
 	'ML_NAME'				=> 'Anchor of the link',
 	'ML_TITLE'			=> 'Title tooltip',
 	'ML_URL'				=> 'URL of the link',
-	// 'ML_BLANK'			=> 'Target = blank',
 	'ML_ADD_LINK'			=> 'Creation of a new link',
 	'ACP_ML_APPEND'		=> 'Links added at the end of the navigation bar',
 	'ACP_ML_APPEND_EXPLAIN'	=> 'You may add up to 5 links at the end of the navigation bar (after the link to the FAQ and before the links to the ACP and MCP). Take in account the space needed for all links in the available width. phpBB puts all elements in the quick link dropdown menu if there is not enough room and the navbar appears empty.',
@@ -43,5 +42,5 @@ $lang = array_merge($lang, array(
 	'ACP_ML_URL_EXPLAIN'	=> 'Address of the page to display. For instance, URL of phpBB site.',
 	'ACP_ML_BLANK_EXPLAIN'	=> 'Check this box if you want the link to open in a new window.',
 	'ACP_ML_FA_EXPLAIN'		=> 'Enter here the name of the fontawesome icon to be used. By default, the extension uses fa-external-link. To look for other icon names, see the file assets/css/font-awesome.min.css.',
-	'ACP_ML_ICON_EXPLAIN'	=> 'Enter here the name ofthe legacy icon to be used. By default, the extension uses icon-faq. See also icon-acp, icon-mcp, icon-search, etc. See the list in styles/colours.css',
+	'ACP_ML_ICON_EXPLAIN'	=> 'Enter here the name of the legacy icon to be used. By default, the extension uses icon-faq. See also icon-acp, icon-mcp, icon-search, etc. See the list in styles/colours.css',
 ));
