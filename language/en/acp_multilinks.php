@@ -20,13 +20,14 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_ML_PREPEND'		=> 'Links added at the beginning of the navigation bar',
-	'ACP_ML_PREPEND_EXPLAIN'	=> 'You may add up to 5 links at the beginning of the navigation bar (before the link to the FAQ). Take in account the space needed for all links in the available width. phpBB puts all elements in the quick link dropdown menu  if there is not enough room and the navbar appears empty.',
+	'ACP_ML_PREPEND_EXPLAIN'	=> 'You may add up to 5 links at the beginning of the navigation bar (before the link to the FAQ).',
+	'ACP_ML_NOTE'			=> 'Note: Take in account the space needed for all links in the available navbar width. phpBB puts all elements in the Quick link dropdown menu if there is not enough room and the navbar appears to be totally empty.',
 	'ML_NAME'				=> 'Anchor of the link',
 	'ML_TITLE'			=> 'Title tooltip',
 	'ML_URL'				=> 'URL of the link',
 	'ML_ADD_LINK'			=> 'Creation of a new link',
 	'ACP_ML_APPEND'		=> 'Links added at the end of the navigation bar',
-	'ACP_ML_APPEND_EXPLAIN'	=> 'You may add up to 5 links at the end of the navigation bar (after the link to the FAQ and before the links to the ACP and MCP). Take in account the space needed for all links in the available width. phpBB puts all elements in the quick link dropdown menu if there is not enough room and the navbar appears empty.',
+	'ACP_ML_APPEND_EXPLAIN'	=> 'You may add up to 5 links at the end of the navigation bar (after the link to the FAQ and before the links to the ACP and MCP).',
 	'MULTILINK_CONFIG_UPDATED'	=> 'The configuration was successfully updated.',
 	'ACP_MULTILINK_ADD_URL'	=> 'Creation of a new link in the navigation bar',
 	'ACP_ADD_URL_PP'		=> '(Prepended at the beginning of the navigation bar)',

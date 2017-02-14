@@ -220,8 +220,8 @@ class multilinks_module {
 		}
 		else
 		{
-			$this->assign_block_vars ('lmdi_multilinks_pp', 'mlpp');
-			$this->assign_block_vars ('lmdi_multilinks_ap', 'mlap');
+			$this->assign_block_vars ($template, $config_text, 'lmdi_multilinks_pp', 'mlpp');
+			$this->assign_block_vars ($template, $config_text, 'lmdi_multilinks_ap', 'mlap');
 			$template->assign_vars(array(
 				'PP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=pp',
 				'AP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=ap',
@@ -232,9 +232,9 @@ class multilinks_module {
 		add_form_key ($form_name);
 	}
 
-	public function assign_block_vars ($config_text, $block)
+	public function assign_block_vars ($template, $config_text, $text, $block)
 	{
-		$links = $config_text->get ($config_text);
+		$links = $config_text->get ($text);
 		$rows = json_decode ($links, true);
 		$nb = count ($rows);
 		for ($i = 0; $i < $nb; $i++)
