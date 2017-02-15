@@ -66,38 +66,74 @@ class listener implements EventSubscriberInterface
 		{
 			$mlinks_320 = 1;
 		}
-		$links = $this->config_text->get ('lmdi_multilinks_pp');
-		$rows = json_decode ($links, true);
-		$nb = count ($rows);
-		for ($i = 0; $i < $nb; $i++)
-		{
-			$row = $rows[$i];
-			$this->template->assign_block_vars('mlpp', array(
-				'NAME'			=> $row['anchor'],
-				'TITLE'			=> $row['title'],
-				'URL'			=> $row['url'],
-				'BLANK'			=> $row['blank']==true ? 'target="_blank"' : '',
-				'ICON'			=> $row['icon'],
-				));
-		}
 
-		$links = $this->config_text->get ('lmdi_multilinks_ap');
-		$rows = json_decode ($links, true);
-		$nb = count ($rows);
-		for ($i = 0; $i < $nb; $i++)
-		{
-			$row = $rows[$i];
-			$this->template->assign_block_vars('mlap', array(
-				'NAME'			=> $row['anchor'],
-				'TITLE'			=> $row['title'],
-				'URL'			=> $row['url'],
-				'BLANK'			=> $row['blank']==true ? 'target="_blank"' : '',
-				'ICON'			=> $row['icon'],
-				));
-		}
+		$this->assign_block_vars ('lmdi_multilinks_pp', 'mlpp');
+		$this->assign_block_vars ('lmdi_multilinks_ap', 'mlap');
 
 		$this->template->assign_vars(array(
 			'S_320'	=> $mlinks_320,
 		));
+	}
+
+	private function assign_block_vars ($text, $block)
+	{
+		$links = $this->config_text->get ($text);
+		$rows = json_decode ($links, true);
+		$nb = count ($rows);
+		for ($i = 0; $i < $nb; $i++)
+		{
+			$row = $rows[$i];
+			$uticon = $utfile = false;
+			$icon = $file = '';
+			$file = $row['file'];
+			$uticon = $row['uticon'];
+			$utfile = $row['utfile'];
+			if ($uticon && $utfile)
+			{
+				$utfile = false;
+			}
+			if (!$uticon && !$utfile)
+			{
+				$uticon = true;
+			}
+			if ($utfile)
+			{
+				$file = $row['file'];
+				if (empty ($file))
+				{
+					$uticon = true;
+				}
+				else
+				{
+					$uticon = false;
+				}
+			}
+			if ($uticon)
+			{
+				$icon = $row['icon'];
+				$utfile = false;
+				if (empty ($icon))
+				{
+					$icon = 'fa-external-link';
+				}
+			}
+			/*
+			var_dump ($i);
+			var_dump ($uticon);
+			var_dump ($icon);
+			var_dump ($utfile);
+			var_dump ($file);
+			*/
+			$this->template->assign_block_vars($block, array(
+				'NAME'	=> $row['anchor'],
+				'TITLE'	=> $row['title'],
+				'URL'	=> $row['url'],
+				'BLANK'	=> $row['blank']==true ? 'target="_blank"' : '',
+				'ICON'	=> $icon,
+				'FILE'	=> $file,
+				'S_ICON'	=> $uticon==true ? true : false,
+				));
+		
+		}
 	}
 }

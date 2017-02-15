@@ -31,11 +31,11 @@
 			<td>{mlpp.URL}</td>
 			<td class="actions" style="text-align: center;">
 				<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
-				<span class="up"><a href="{mlpp.U_PP_MOVE_UP}">{ICON_MOVE_UP}</a></span>
+				<span class="up"><a href="{mlpp.U_ML_MOVE_UP}">{ICON_MOVE_UP}</a></span>
 				<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
-				<span class="down"><a href="{mlpp.U_PP_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
-				<a href="{mlpp.U_PP_EDIT}">{ICON_EDIT}</a>
-				<a href="{mlpp.U_PP_DELETE}">{ICON_DELETE}</a>
+				<span class="down"><a href="{mlpp.U_ML_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
+				<a href="{mlpp.U_ML_EDIT}">{ICON_EDIT}</a>
+				<a href="{mlpp.U_ML_DELETE}">{ICON_DELETE}</a>
 			</td>
 		</tr>
 	<!-- END mlpp -->
@@ -68,17 +68,18 @@
 			<td>{mlap.URL}</td>
 			<td class="actions" style="text-align: center;">
 				<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
-				<span class="up"><a href="{mlap.U_AP_MOVE_UP}">{ICON_MOVE_UP}</a></span>
+				<span class="up"><a href="{mlap.U_ML_MOVE_UP}">{ICON_MOVE_UP}</a></span>
 				<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
-				<span class="down"><a href="{mlap.U_AP_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
-				<a href="{mlap.U_AP_EDIT}">{ICON_EDIT}</a>
-				<a href="{mlap.U_AP_DELETE}">{ICON_DELETE}</a>
+				<span class="down"><a href="{mlap.U_ML_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
+				<a href="{mlap.U_ML_EDIT}">{ICON_EDIT}</a>
+				<a href="{mlap.U_ML_DELETE}">{ICON_DELETE}</a>
 			</td>
 		</tr>
 	<!-- END mlap -->
 	</tbody>
 	</table>
-	<br><b>{L_ACP_ML_NOTE}</b>
+	<dl><br>{L_ACP_ML_NOTE}</dl>
+	
 </fieldset>
 {S_FORM_TOKEN}
 </form>
@@ -110,14 +111,18 @@
 		<!-- IF S_320 -->
 		<dl>
 			<dt><label for="ml_icon">{L_ACP_MULTILINK_FA}{L_COLON}</label><br />{L_ACP_ML_FA_EXPLAIN}</dt>
-			<dd><input type="text" name="ml_icon" value="{MLICON}" /></dd>
+			<dd><label><input type="radio" name="use_icon" value="1" {ICON_YES} class="radio" />{L_YES}</label><label><input type="radio" name="use_icon" value="0" {ICON_NO} class="radio" />{L_NO}</label><br /><input type="text" id= "ml_icon" name="ml_icon" value="{MLICON}" /></dd>
 		</dl>
 		<!-- ELSE -->
 		<dl>
 			<dt><label for="ml_icon">{L_ACP_MULTILINK_ICON}{L_COLON}</label><br />{L_ACP_ML_ICON_EXPLAIN}</dt>
-			<dd><input type="text" name="ml_icon" value="{MLICON}" /></dd>
+			<dd><label><input type="radio" name="use_icon" value="1" {ICON_YES} class="radio" />{L_YES}</label><label><input type="radio" name="use_icon" value="0" {ICON_NO} class="radio" />{L_NO}</label><br /><input type="text" id= "ml_icon" name="ml_icon" value="{MLICON}" /></dd>
 		</dl>
 		<!-- ENDIF -->
+		<dl>
+			<dt><label for="ml_file">{L_ACP_MULTILINK_FILE}{L_COLON}</label><br />{L_ACP_ML_FILE_EXPLAIN}</dt>
+			<dd><label><input type="radio" name="use_file" value="1" {FILE_YES} class="radio" />{L_YES}</label><label><input type="radio" name="use_file" value="0" {FILE_NO} class="radio" />{L_NO}</label><br /><input type="text" id= "ml_file" name="ml_file" value="{MLFILE}" /></dd>
+		</dl>
 		<input type="hidden" name="id" value="{URL_ID}">
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
