@@ -133,7 +133,6 @@ class listener implements EventSubscriberInterface
 				'FILE'	=> $file,
 				'S_ICON'	=> $uticon==true ? true : false,
 				));
-		
 		}
 	}
 }

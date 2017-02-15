@@ -125,7 +125,7 @@ class multilinks_module {
 					$links = $config_text->get ('lmdi_multilinks_'.$ppap);
 					$rows = json_decode ($links, true);
 					$row = $rows[$id];
-					var_dump ($row['uticon']);
+					// var_dump ($row['uticon']);
 					$template->assign_vars(array(
 						'S_320'		=> $mlinks_320,
 						'URL_ID'		=> $id,
@@ -192,7 +192,7 @@ class multilinks_module {
 	private function assign_block_vars ($config_text, $text, $block, $ppap, $form_name)
 	{
 		global $template;
-		
+
 		$links = $config_text->get ($text);
 		$rows = json_decode ($links, true);
 		$nb = count ($rows);
@@ -215,7 +215,7 @@ class multilinks_module {
 	private function validation_data ($mlinks_320, $config_text, $ppap)
 	{
 		global $request, $user;
-		
+
 		$id = $request->variable ('id', -1);
 		$anchor = $request->variable ('ml_anchor', '', true);
 		$title = $request->variable ('ml_title', '', true);
