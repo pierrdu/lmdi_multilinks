@@ -117,13 +117,6 @@ class listener implements EventSubscriberInterface
 					$icon = 'fa-external-link';
 				}
 			}
-			/*
-			var_dump ($i);
-			var_dump ($uticon);
-			var_dump ($icon);
-			var_dump ($utfile);
-			var_dump ($file);
-			*/
 			$this->template->assign_block_vars($block, array(
 				'NAME'	=> $row['anchor'],
 				'TITLE'	=> $row['title'],

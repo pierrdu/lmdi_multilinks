@@ -125,7 +125,6 @@ class multilinks_module {
 					$links = $config_text->get ('lmdi_multilinks_'.$ppap);
 					$rows = json_decode ($links, true);
 					$row = $rows[$id];
-					// var_dump ($row['uticon']);
 					$template->assign_vars(array(
 						'S_320'		=> $mlinks_320,
 						'URL_ID'		=> $id,
