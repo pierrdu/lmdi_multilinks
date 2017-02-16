@@ -45,5 +45,5 @@ $lang = array_merge($lang, array(
 	'ACP_ML_BLANK_EXPLAIN'	=> 'Cochez cette case si vous voulez que le lien s’ouvre dans une nouvelle fenêtre.',
 	'ACP_ML_FA_EXPLAIN'		=> 'Indiquez ici l’icône Font Awesome à utiliser. Par défaut, fa-external-link. Pour rechercher les noms d’autres icônes, consultez le fichier assets/css/font-awesome.min.css.',
 	'ACP_ML_ICON_EXPLAIN'	=> 'Indiquez ici l’icône classique à utiliser. Par défaut, l’extension utilise icon-faq. Voir également icon-acp, icon-mcp, icon-search, etc. Voir la liste dans styles/colours.css.',
-	'ACP_ML_FILE_EXPLAIN'	=> 'Indiquez ici l’URL d’un fichier graphique à utiliser pour accompagner le lien. Il peut s’agir d’une URL distante (à saisir complète) ou d’une URL locale (sur le serveur du forum). Types de fichiers acceptés&nbsp;: gif, png. L’image sera réduite à 20 x 20 pixels.',
+	'ACP_ML_FILE_EXPLAIN'	=> 'Indiquez ici l’URL d’un fichier graphique à utiliser pour accompagner le lien. Il peut s’agir d’une URL distante (à saisir complète) ou d’une URL locale (sur le serveur du forum). Types de fichiers acceptés&nbsp;: gif, png. Si l’image fait plus de 20 x 20 pixels, elle sera réduite à cette taille.',
 	));
