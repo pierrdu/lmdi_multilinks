@@ -9,3 +9,8 @@ services:
         tags:
             - { name: event.listener }
 
+    lmdi.multilinks.multilinks_path_helper:
+        class: lmdi\multilinks\core\path_helper
+        arguments:
+            - '@ext.manager'
+            - '@path_helper'

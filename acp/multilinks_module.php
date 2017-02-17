@@ -12,10 +12,16 @@ class multilinks_module {
 
 	public $u_action;
 	protected $action;
+	protected $path_helper;
+	protected $ext_path;
 
 	public function main ($id, $mode)
 	{
 		global $user, $config, $template, $request, $phpbb_container;
+
+		$this->path_helper = $phpbb_container->get('lmdi.multilinks.multilinks_path_helper');
+		$this->ext_path = $this->path_helper->get_ext_path_web ();
+		// var_dump ($this->ext_path);
 
 		$form_name = 'acp_multilinks';
 
@@ -52,6 +58,49 @@ class multilinks_module {
 		{
 			switch ($action)
 			{
+				// Item transfer into the other table
+				case 'transfer' :
+					$token = $request->variable ('hash', '');
+					if (check_link_hash ($token, $form_name))
+					{
+						if ($ppap == 'ap')
+						{
+							$otext = 'lmdi_multilinks_ap';
+							$dtext = 'lmdi_multilinks_pp';
+							$orig = $config_text->get ('lmdi_multilinks_ap');
+							$dest = $config_text->get ('lmdi_multilinks_pp');
+						}
+						else
+						{
+							$otext = 'lmdi_multilinks_pp';
+							$dtext = 'lmdi_multilinks_ap';
+							$orig = $config_text->get ('lmdi_multilinks_pp');
+							$dest = $config_text->get ('lmdi_multilinks_ap');
+						}
+						$orows = json_decode ($orig, true);
+						$drows = json_decode ($dest, true);
+						$nbdest = count ($drows);
+						if ($nbdest >= 5)
+						{
+							trigger_error($user->lang['ACP_ML_TABLE_FULL'] . adm_back_link($this->u_action), E_USER_WARNING);
+						}
+						$id = $request->variable('id', -1);
+						$orow = $orows[$id];
+						$drows[] = $orow;
+						$drows = array_values ($drows);
+						$dest = json_encode ($drows);
+						$config_text->set ($dtext, $dest);
+						unset ($orows[$id]);
+						$orows = array_values ($orows);
+						$orig = json_encode ($orows);
+						$config_text->set ($otext, $orig);
+						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					}
+					else
+					{
+						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
+					}
+				break;
 				// Item move up
 				case 'move_up' :
 					$token = $request->variable ('hash', '');
@@ -175,13 +224,28 @@ class multilinks_module {
 		}
 		else
 		{
-			$this->assign_block_vars ($config_text, 'lmdi_multilinks_pp', 'mlpp', 'pp', $form_name);
-			$this->assign_block_vars ($config_text, 'lmdi_multilinks_ap', 'mlap', 'ap', $form_name);
+			$pict = $this->ext_path . 'adm/style/icon_trans.gif';
+			$altstr = $user->lang['ACP_ML_TRANSFER'];
+			$s_disable_pp = false;
+			$nb = $this->assign_block_vars ($config_text, 'lmdi_multilinks_pp', 'mlpp', 'pp', $form_name);
+			if ($nb >= 5)
+			{
+				$s_disable_pp = true;
+			}
+			$s_disable_ap = false;
+			$nb = $this->assign_block_vars ($config_text, 'lmdi_multilinks_ap', 'mlap', 'ap', $form_name);
+			if ($nb >= 5)
+			{
+				$s_disable_ap = true;
+			}
 			$template->assign_vars(array(
 				'PP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=pp',
 				'AP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=ap',
 				'S_CONFIG_PAGE'	=> true,
 				'U_ACTION'		=> $this->u_action,
+				'ICON_ML_TRANSFER'	=> "<img src=\"$pict\" alt=\"$altstr\" title=\"$altstr\" />",
+				'S_DISABLE_PP'		=> $s_disable_pp == true ? true : false,
+				'S_DISABLE_AP'		=> $s_disable_ap == true ? true : false,
 				));
 		}
 		add_form_key ($form_name);
@@ -206,8 +270,10 @@ class multilinks_module {
 				'U_ML_MOVE_DOWN'	=> $this->u_action . "&amp;action=move_down&amp;ppap=$ppap&amp;id=$i&amp;hash=" . generate_link_hash($form_name),
 				'U_ML_EDIT'		=> $this->u_action . "&amp;action=edit&amp;ppap=$ppap&amp;id=$i",
 				'U_ML_DELETE'		=> $this->u_action . "&amp;action=delete&amp;ppap=$ppap&amp;id=$i",
+				'U_ML_TRANSFER'	=> $this->u_action . "&amp;action=transfer&amp;ppap=$ppap&amp;id=$i&amp;hash=" . generate_link_hash($form_name),
 				));
 		}
+		return ($nb);
 	}
 
 
@@ -215,6 +281,13 @@ class multilinks_module {
 	{
 		global $request, $user;
 
+		$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+		$rows = json_decode ($links, true);
+		$nbdest = count ($rows);
+		if ($nbdest >= 5)
+		{
+			trigger_error($user->lang['ACP_ML_TABLE_FULL'] . adm_back_link($this->u_action), E_USER_WARNING);
+		}
 		$id = $request->variable ('id', -1);
 		$anchor = $request->variable ('ml_anchor', '', true);
 		$title = $request->variable ('ml_title', '', true);
@@ -243,8 +316,6 @@ class multilinks_module {
 		{
 			$utfile = false;
 		}
-		$links = $config_text->get ('lmdi_multilinks_'.$ppap);
-		$rows = json_decode ($links, true);
 		if ($id == -1)
 		{
 			$rows[] = array ('anchor' => $anchor, 'title' => $title, 'url' => $url, 'blank' => $blank, 'icon' => $icon, 'uticon' => $uticon, 'file' => $file, 'utfile' => $utfile);
