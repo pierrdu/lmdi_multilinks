@@ -14,6 +14,7 @@ class multilinks_module {
 	protected $action;
 	protected $path_helper;
 	protected $ext_path;
+	protected $config_text;
 
 	public function main ($id, $mode)
 	{
@@ -24,8 +25,10 @@ class multilinks_module {
 		// var_dump ($this->ext_path);
 
 		$form_name = 'acp_multilinks';
+		$config_text_pp = 'lmdi_multilinks_pp';
+		$config_text_ap = 'lmdi_multilinks_ap';
 
-		$config_text = $phpbb_container->get('config_text');
+		$this->config_text = $phpbb_container->get('config_text');
 		$user->add_lang_ext ('lmdi/multilinks', 'acp_multilinks');
 		$this->tpl_name = 'acp_multilinks_body';
 		$this->page_title = $user->lang['ACP_MULTILINKS_TITLE'];
@@ -65,17 +68,17 @@ class multilinks_module {
 					{
 						if ($ppap == 'ap')
 						{
-							$otext = 'lmdi_multilinks_ap';
-							$dtext = 'lmdi_multilinks_pp';
-							$orig = $config_text->get ('lmdi_multilinks_ap');
-							$dest = $config_text->get ('lmdi_multilinks_pp');
+							$otext = $config_text_ap;
+							$dtext = $config_text_pp;
+							$orig = $this->config_text->get ($config_text_ap);
+							$dest = $this->config_text->get ($config_text_pp);
 						}
 						else
 						{
-							$otext = 'lmdi_multilinks_pp';
-							$dtext = 'lmdi_multilinks_ap';
-							$orig = $config_text->get ('lmdi_multilinks_pp');
-							$dest = $config_text->get ('lmdi_multilinks_ap');
+							$otext = $config_text_pp;
+							$dtext = $config_text_ap;
+							$orig = $this->config_text->get ($config_text_pp);
+							$dest = $this->config_text->get ($config_text_ap);
 						}
 						$orows = json_decode ($orig, true);
 						$drows = json_decode ($dest, true);
@@ -89,11 +92,11 @@ class multilinks_module {
 						$drows[] = $orow;
 						$drows = array_values ($drows);
 						$dest = json_encode ($drows);
-						$config_text->set ($dtext, $dest);
+						$this->config_text->set ($dtext, $dest);
 						unset ($orows[$id]);
 						$orows = array_values ($orows);
 						$orig = json_encode ($orows);
-						$config_text->set ($otext, $orig);
+						$this->config_text->set ($otext, $orig);
 						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 					}
 					else
@@ -107,7 +110,7 @@ class multilinks_module {
 					if (check_link_hash ($token, $form_name))
 					{
 						$id = $request->variable('id', -1);
-						$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+						$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 						$rows = json_decode ($links, true);
 						$row0 = $rows[$id-1];
 						$row1 = $rows[$id];
@@ -115,7 +118,7 @@ class multilinks_module {
 						$rows[$id] = $row0;
 						$rows = array_values ($rows);
 						$links = json_encode ($rows);
-						$config_text->set ('lmdi_multilinks_'.$ppap, $links);
+						$this->config_text->set ('lmdi_multilinks_'.$ppap, $links);
 						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 					}
 					else
@@ -129,7 +132,7 @@ class multilinks_module {
 					if (check_link_hash ($token, $form_name))
 					{
 						$id = $request->variable('id', -1);
-						$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+						$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 						$rows = json_decode ($links, true);
 						$row0 = $rows[$id+1];
 						$row1 = $rows[$id];
@@ -137,7 +140,7 @@ class multilinks_module {
 						$rows[$id] = $row0;
 						$rows = array_values ($rows);
 						$links = json_encode ($rows);
-						$config_text->set ('lmdi_multilinks_'.$ppap, $links);
+						$this->config_text->set ('lmdi_multilinks_'.$ppap, $links);
 						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 					}
 					else
@@ -150,13 +153,12 @@ class multilinks_module {
 					if (confirm_box(true))
 					{
 						$id = $request->variable('id', -1);
-						$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+						$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 						$rows = json_decode ($links, true);
 						unset ($rows[$id]);
-						// array_slice ($rows, $id, 1);
 						$rows = array_values ($rows);
 						$links = json_encode ($rows);
-						$config_text->set ('lmdi_multilinks_'.$ppap, $links);
+						$this->config_text->set ('lmdi_multilinks_'.$ppap, $links);
 						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 					}
 					else
@@ -171,7 +173,7 @@ class multilinks_module {
 				// Item edition
 				case 'edit' :
 					$id = $request->variable('id', -1);
-					$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+					$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 					$rows = json_decode ($links, true);
 					$row = $rows[$id];
 					$template->assign_vars(array(
@@ -212,7 +214,7 @@ class multilinks_module {
 						'S_ADD_PP'	=> $ppap == 'pp' ? true : false,
 						));
 				break;
-				// New item or edited idem saving
+				// New or edited idem saving
 				case 'save' :
 					if (!check_form_key($form_name))
 					{
@@ -224,26 +226,30 @@ class multilinks_module {
 		}
 		else
 		{
-			$pict = $this->ext_path . 'adm/style/icon_trans.gif';
-			$altstr = $user->lang['ACP_ML_TRANSFER'];
+			$nbpp = $this->count_items ($config_text_pp);
+			$nbap = $this->count_items ($config_text_ap);
+			$this->assign_block_vars ($config_text_pp, 'mlpp', 'pp', $form_name, $nbap);
+			$this->assign_block_vars ($config_text_ap, 'mlap', 'ap', $form_name, $nbpp);
 			$s_disable_pp = false;
-			$nb = $this->assign_block_vars ($config_text, 'lmdi_multilinks_pp', 'mlpp', 'pp', $form_name);
-			if ($nb >= 5)
+			if ($nbpp >= 5)
 			{
 				$s_disable_pp = true;
 			}
 			$s_disable_ap = false;
-			$nb = $this->assign_block_vars ($config_text, 'lmdi_multilinks_ap', 'mlap', 'ap', $form_name);
-			if ($nb >= 5)
+			if ($nbap >= 5)
 			{
 				$s_disable_ap = true;
 			}
+			$pict = $this->ext_path . 'adm/style/icon_trans.gif';
+			$pictno = $this->ext_path . 'adm/style/icon_trans_disabled.gif';
+			$altstr = $user->lang['ACP_ML_TRANSFER'];
 			$template->assign_vars(array(
 				'PP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=pp',
 				'AP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=ap',
 				'S_CONFIG_PAGE'	=> true,
 				'U_ACTION'		=> $this->u_action,
 				'ICON_ML_TRANSFER'	=> "<img src=\"$pict\" alt=\"$altstr\" title=\"$altstr\" />",
+				'ICON_ML_TRANSNO'	=> "<img src=\"$pictno\" alt=\"$altstr\" title=\"$altstr\" />",
 				'S_DISABLE_PP'		=> $s_disable_pp == true ? true : false,
 				'S_DISABLE_AP'		=> $s_disable_ap == true ? true : false,
 				));
@@ -252,11 +258,20 @@ class multilinks_module {
 	}
 
 
-	private function assign_block_vars ($config_text, $text, $block, $ppap, $form_name)
+	private function count_items ($text)
+	{
+		$links = $this->config_text->get ($text);
+		$rows = json_decode ($links, true);
+		$nb = count ($rows);
+		return $nb;
+	}
+
+
+	private function assign_block_vars ($text, $block, $ppap, $form_name)
 	{
 		global $template;
 
-		$links = $config_text->get ($text);
+		$links = $this->config_text->get ($text);
 		$rows = json_decode ($links, true);
 		$nb = count ($rows);
 		for ($i = 0; $i < $nb; $i++)
@@ -271,17 +286,17 @@ class multilinks_module {
 				'U_ML_EDIT'		=> $this->u_action . "&amp;action=edit&amp;ppap=$ppap&amp;id=$i",
 				'U_ML_DELETE'		=> $this->u_action . "&amp;action=delete&amp;ppap=$ppap&amp;id=$i",
 				'U_ML_TRANSFER'	=> $this->u_action . "&amp;action=transfer&amp;ppap=$ppap&amp;id=$i&amp;hash=" . generate_link_hash($form_name),
+				'U_ML_TRANSNO'		=> '',
 				));
 		}
-		return ($nb);
 	}
 
 
-	private function validation_data ($mlinks_320, $config_text, $ppap)
+	private function validation_data ($mlinks_320, $ppap)
 	{
 		global $request, $user;
 
-		$links = $config_text->get ('lmdi_multilinks_'.$ppap);
+		$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 		$rows = json_decode ($links, true);
 		$nbdest = count ($rows);
 		if ($nbdest >= 5)
@@ -326,7 +341,7 @@ class multilinks_module {
 		}
 		$rows = array_values ($rows);
 		$links = json_encode ($rows);
-		$config_text->set ('lmdi_multilinks_'.$ppap, $links);
+		$this->config_text->set ('lmdi_multilinks_'.$ppap, $links);
 		trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 	}
 }

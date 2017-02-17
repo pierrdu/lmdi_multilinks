@@ -34,7 +34,11 @@
 				<span class="down"><a href="{mlpp.U_ML_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
 				<a href="{mlpp.U_ML_EDIT}">{ICON_EDIT}</a>
 				<a href="{mlpp.U_ML_DELETE}">{ICON_DELETE}</a>
-				<a href="{mlpp.U_ML_TRANSFER}">{ICON_ML_TRANSFER}</a>
+				<!-- IF S_DISABLE_AP -->
+					{ICON_ML_TRANSNO}
+				<!-- ELSE -->
+					<a href="{mlpp.U_ML_TRANSFER}">{ICON_ML_TRANSFER}</a>
+				<!-- ENDIF -->
 			</td>
 		</tr>
 	<!-- END mlpp -->
@@ -74,7 +78,11 @@
 				<span class="down"><a href="{mlap.U_ML_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
 				<a href="{mlap.U_ML_EDIT}">{ICON_EDIT}</a>
 				<a href="{mlap.U_ML_DELETE}">{ICON_DELETE}</a>
-				<a href="{mlap.U_ML_TRANSFER}">{ICON_ML_TRANSFER}</a>
+				<!-- IF S_DISABLE_PP -->
+					{ICON_ML_TRANSNO}
+				<!-- ELSE -->
+					<a href="{mlap.U_ML_TRANSFER}">{ICON_ML_TRANSFER}</a>
+				<!-- ENDIF -->
 			</td>
 		</tr>
 	<!-- END mlap -->
