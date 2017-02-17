@@ -164,7 +164,7 @@ class multilinks_module {
 						confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields(array(
 							'i' => $id,
 							'mode' => $mode,
-							'action' => $action))
+							'action' => ''))
 						);
 					}
 				break;
