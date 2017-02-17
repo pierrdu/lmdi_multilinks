@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Adds outbound links in the navbar",
 	"homepage": "http://www.insecte.org/ext/readme.txt",
-	"version": "1.1.1",
+	"version": "1.1.2",
 	"time": "2017-2-17",
 	"license": "GPL-2.0",
 	"authors": [
@@ -22,6 +22,12 @@
 		"display-name": "LMDI Multilinks",
 		"soft-require": {
 			"phpbb/phpbb": ">=3.1.0"
+		},
+		"version-check": {
+			"host": "www.insecte.org",
+			"directory": "/ext/versions",
+			"filename": "multilinks.json",
+			"ssl": 1
 		}
 	}
 }
