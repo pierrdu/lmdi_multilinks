@@ -44,13 +44,13 @@ class multilinks_module {
 			$mlinks_320 = 1;
 		}
 		$action = $request->variable ('action', '');
-		
+
 		// Deletion cancelled => plain display of data
 		if ($action == 'delete' && $request->is_set_post('cancel'))
 		{
 			$action = '';
 		}
-		
+
 		if ($request->is_set_post('submit'))
 		{
 			switch ($action)
