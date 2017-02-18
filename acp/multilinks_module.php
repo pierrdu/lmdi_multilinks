@@ -322,10 +322,12 @@ class multilinks_module {
 		$uticon = $request->variable('use_icon', false);
 		$file = $request->variable ('ml_file', '', true);
 		$utfile = $request->variable('use_file', false);
+		// Using icon by default
 		if (!$utfile && !$uticon)
 		{
 			$uticon = true;
 		}
+		// Default icons if empty
 		if (empty ($icon))
 		{
 			if ($mlinks_320)
@@ -335,6 +337,14 @@ class multilinks_module {
 			else
 			{
 				$icon = 'icon-faq';
+			}
+		}
+		// FA icon without the 'fa-' prefix
+		if (!empty ($icon) && $mlinks_320)
+		{
+			if (substr ($icon, 0, 3) != 'fa-')
+			{
+				$icon = 'fa-' . $icon;
 			}
 		}
 		if (empty ($file))

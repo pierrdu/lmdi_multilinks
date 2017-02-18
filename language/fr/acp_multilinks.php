@@ -43,7 +43,7 @@ $lang = array_merge($lang, array(
 	'ACP_ML_TITLE_EXPLAIN'	=> 'Saisissez ici le texte explicatif qui doit être affiché dans une infobulle lorsque le curseur survole le lien.',
 	'ACP_ML_URL_EXPLAIN'	=> 'Adresse de la page à afficher. Par exemple, URL du site phpBB.',
 	'ACP_ML_BLANK_EXPLAIN'	=> 'Cochez cette case si vous voulez que le lien s’ouvre dans une nouvelle fenêtre.',
-	'ACP_ML_FA_EXPLAIN'		=> 'Indiquez ici l’icône Font Awesome à utiliser. Par défaut, fa-external-link. Pour rechercher les noms d’autres icônes, consultez le fichier assets/css/font-awesome.min.css.',
+	'ACP_ML_FA_EXPLAIN'		=> 'Indiquez ici l’icône Font Awesome à utiliser. Par défaut, fa-external-link (&#xF08e;). Voir le <a href="http://fontawesome.io/icons/">site Font Awesome</a> pour les possibilités offertes par cette police. Il suffit d’ajouter le préfixe &#8216;fa-’ devant le nom. Pour rechercher des exemples d’icônes utilisées dans le logiciel phpBB, consultez le fichier assets/css/font-awesome.min.css.',
 	'ACP_ML_ICON_EXPLAIN'	=> 'Indiquez ici l’icône classique à utiliser. Par défaut, l’extension utilise icon-faq. Voir également icon-acp, icon-mcp, icon-search, etc. Voir la liste dans styles/colours.css.',
 	'ACP_ML_FILE_EXPLAIN'	=> 'Indiquez ici l’URL d’un fichier graphique à utiliser pour accompagner le lien. Il peut s’agir d’une URL distante (à saisir complète) ou d’une URL locale (sur le serveur du forum). Types de fichiers acceptés&nbsp;: gif, png. Si l’image fait plus de 20&nbsp;x&nbsp;20 pixels, elle sera réduite à ces dimensions.',
 	'ACP_ML_TRANSFER'		=> 'Transférer dans l’autre table',
