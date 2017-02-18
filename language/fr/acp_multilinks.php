@@ -20,14 +20,14 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_ML_PREPEND'		=> 'Liens ajoutés au début de la barre de navigation',
-	'ACP_ML_PREPEND_EXPLAIN'	=> 'Vous pouvez ajouter un <b>maximum</b> de 5 liens au début de la barre de navigation (avant le lien vers la FAQ).',
+	'ACP_ML_PREPEND_EXPLAIN'	=> 'Vous pouvez ajouter un <b>maximum</b> de 5 liens au début de la barre de navigation (avant le lien de la FAQ).',
 	'ACP_ML_NOTE'			=> '<b>Nota bene&nbsp;:</b> Tenez bien compte de l’espace que chacun de ces liens peut occuper dans l’espace disponible. phpBB place tous les éléments dans le menu déroulant Accès rapide s’il n’y a pas assez de place sur la barre de navigation pour afficher vos liens, si bien que la barre de navigation apparaît totalement vide.',
 	'ML_NAME'				=> 'Légende du lien',
 	'ML_TITLE'			=> 'Texte affiché au survol',
 	'ML_URL'				=> 'URL du lien',
-	'ML_ADD_LINK'			=> 'Création d’un nouveau lien',
+	'ML_ADD_LINK'			=> 'Créer un nouveau lien',
 	'ACP_ML_APPEND'		=> 'Liens ajoutés à la fin de la barre de navigation',
-	'ACP_ML_APPEND_EXPLAIN'	=> 'Vous pouvez ajouter un <b>maximum</b> de 5 liens à la fin de la barre de navigation (entre le lien vers la FAQ et ceux vers le PCA et le PCM).',
+	'ACP_ML_APPEND_EXPLAIN'	=> 'Vous pouvez ajouter un <b>maximum</b> de 5 liens à la fin de la barre de navigation (entre le lien de la FAQ et ceux vers le PCA et le PCM).',
 	'MULTILINK_CONFIG_UPDATED'	=> 'La configuration de l’extension a été mise à jour.',
 	'ACP_MULTILINK_ADD_URL'	=> 'Création d’un nouveau lien dans la barre de navigation',
 	'ACP_ADD_URL_PP'		=> '(Addition au début de la barre de navigation)',

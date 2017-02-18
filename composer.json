@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Adds outbound links in the navbar",
 	"homepage": "http://www.insecte.org/ext/readme.txt",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"time": "2017-2-17",
 	"license": "GPL-2.0",
 	"authors": [
@@ -16,7 +16,7 @@
 		{
 		"name": "cabot",
 		"homepage": "http://cabotweb.fr",
-		"role": "SushiMaker & style"
+		"role": "SushiMaker with style"
 		}
 	],
 	"require": {

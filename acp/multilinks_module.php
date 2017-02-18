@@ -33,7 +33,6 @@ class multilinks_module {
 		$this->tpl_name = 'acp_multilinks_body';
 		$this->page_title = $user->lang['ACP_MULTILINKS_TITLE'];
 
-		$action = $request->variable ('action', '');
 		$ppap = $request->variable ('ppap', '');	// 'pp' = prepend, 'ap' = append
 
 		if (version_compare ($config['version'], '3.2.x', '<'))
@@ -44,7 +43,14 @@ class multilinks_module {
 		{
 			$mlinks_320 = 1;
 		}
-
+		$action = $request->variable ('action', '');
+		
+		// Deletion cancelled => plain display of data
+		if ($action == 'delete' && $request->is_set_post('cancel'))
+		{
+			$action = '';
+		}
+		
 		if ($request->is_set_post('submit'))
 		{
 			switch ($action)
@@ -87,13 +93,13 @@ class multilinks_module {
 						{
 							trigger_error($user->lang['ACP_ML_TABLE_FULL'] . adm_back_link($this->u_action), E_USER_WARNING);
 						}
-						$id = $request->variable('id', -1);
-						$orow = $orows[$id];
+						$uid = $request->variable('uid', -1);
+						$orow = $orows[$uid];
 						$drows[] = $orow;
 						$drows = array_values ($drows);
 						$dest = json_encode ($drows);
 						$this->config_text->set ($dtext, $dest);
-						unset ($orows[$id]);
+						unset ($orows[$uid]);
 						$orows = array_values ($orows);
 						$orig = json_encode ($orows);
 						$this->config_text->set ($otext, $orig);
@@ -109,13 +115,13 @@ class multilinks_module {
 					$token = $request->variable ('hash', '');
 					if (check_link_hash ($token, $form_name))
 					{
-						$id = $request->variable('id', -1);
+						$uid = $request->variable('uid', -1);
 						$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 						$rows = json_decode ($links, true);
-						$row0 = $rows[$id-1];
-						$row1 = $rows[$id];
-						$rows[$id-1] = $row1;
-						$rows[$id] = $row0;
+						$row0 = $rows[$uid-1];
+						$row1 = $rows[$uid];
+						$rows[$uid-1] = $row1;
+						$rows[$uid] = $row0;
 						$rows = array_values ($rows);
 						$links = json_encode ($rows);
 						$this->config_text->set ('lmdi_multilinks_'.$ppap, $links);
@@ -131,13 +137,13 @@ class multilinks_module {
 					$token = $request->variable ('hash', '');
 					if (check_link_hash ($token, $form_name))
 					{
-						$id = $request->variable('id', -1);
+						$uid = $request->variable('uid', -1);
 						$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 						$rows = json_decode ($links, true);
-						$row0 = $rows[$id+1];
-						$row1 = $rows[$id];
-						$rows[$id+1] = $row1;
-						$rows[$id] = $row0;
+						$row0 = $rows[$uid+1];
+						$row1 = $rows[$uid];
+						$rows[$uid+1] = $row1;
+						$rows[$uid] = $row0;
 						$rows = array_values ($rows);
 						$links = json_encode ($rows);
 						$this->config_text->set ('lmdi_multilinks_'.$ppap, $links);
@@ -152,10 +158,10 @@ class multilinks_module {
 				case 'delete' :
 					if (confirm_box(true))
 					{
-						$id = $request->variable('id', -1);
+						$uid = $request->variable('uid', -1);
 						$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 						$rows = json_decode ($links, true);
-						unset ($rows[$id]);
+						unset ($rows[$uid]);
 						$rows = array_values ($rows);
 						$links = json_encode ($rows);
 						$this->config_text->set ('lmdi_multilinks_'.$ppap, $links);
@@ -163,22 +169,25 @@ class multilinks_module {
 					}
 					else
 					{
+						$uid = $request->variable('uid', -1);
 						confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields(array(
 							'i' => $id,
 							'mode' => $mode,
-							'action' => ''))
+							'action' => $action,
+							'uid' => $uid,
+							))
 						);
 					}
 				break;
 				// Item edition
 				case 'edit' :
-					$id = $request->variable('id', -1);
+					$uid = $request->variable('uid', -1);
 					$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 					$rows = json_decode ($links, true);
-					$row = $rows[$id];
+					$row = $rows[$uid];
 					$template->assign_vars(array(
 						'S_320'		=> $mlinks_320,
-						'URL_ID'		=> $id,
+						'URL_ID'		=> $uid,
 						'ANCHOR'		=> $row['anchor'],
 						'TITLE'		=> $row['title'],
 						'URL'		=> $row['url'],
@@ -220,7 +229,7 @@ class multilinks_module {
 					{
 						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
 					}
-					$this->validation_data ($mlinks_320, $config_text, $ppap);
+					$this->validation_data ($mlinks_320, $ppap);
 				break;
 			}
 		}
@@ -281,11 +290,11 @@ class multilinks_module {
 				'NAME'			=> $row['anchor'],
 				'TITLE'			=> $row['title'],
 				'URL'			=> $row['url'],
-				'U_ML_MOVE_UP'		=> $this->u_action . "&amp;action=move_up&amp;ppap=$ppap&amp;id=$i&amp;hash=" . generate_link_hash($form_name),
-				'U_ML_MOVE_DOWN'	=> $this->u_action . "&amp;action=move_down&amp;ppap=$ppap&amp;id=$i&amp;hash=" . generate_link_hash($form_name),
-				'U_ML_EDIT'		=> $this->u_action . "&amp;action=edit&amp;ppap=$ppap&amp;id=$i",
-				'U_ML_DELETE'		=> $this->u_action . "&amp;action=delete&amp;ppap=$ppap&amp;id=$i",
-				'U_ML_TRANSFER'	=> $this->u_action . "&amp;action=transfer&amp;ppap=$ppap&amp;id=$i&amp;hash=" . generate_link_hash($form_name),
+				'U_ML_MOVE_UP'		=> $this->u_action . "&amp;action=move_up&amp;ppap=$ppap&amp;uid=$i&amp;hash=" . generate_link_hash($form_name),
+				'U_ML_MOVE_DOWN'	=> $this->u_action . "&amp;action=move_down&amp;ppap=$ppap&amp;uid=$i&amp;hash=" . generate_link_hash($form_name),
+				'U_ML_EDIT'		=> $this->u_action . "&amp;action=edit&amp;ppap=$ppap&amp;uid=$i",
+				'U_ML_DELETE'		=> $this->u_action . "&amp;action=delete&amp;ppap=$ppap&amp;uid=$i",
+				'U_ML_TRANSFER'	=> $this->u_action . "&amp;action=transfer&amp;ppap=$ppap&amp;uid=$i&amp;hash=" . generate_link_hash($form_name),
 				'U_ML_TRANSNO'		=> '',
 				));
 		}
@@ -296,14 +305,15 @@ class multilinks_module {
 	{
 		global $request, $user;
 
+		$uid = $request->variable('uid', -1);
 		$links = $this->config_text->get ('lmdi_multilinks_'.$ppap);
 		$rows = json_decode ($links, true);
 		$nbdest = count ($rows);
-		if ($nbdest >= 5)
+		if ($nbdest >= 5 && $uid == -1)
 		{
 			trigger_error($user->lang['ACP_ML_TABLE_FULL'] . adm_back_link($this->u_action), E_USER_WARNING);
 		}
-		$id = $request->variable ('id', -1);
+		$uid = $request->variable('uid', -1);
 		$anchor = $request->variable ('ml_anchor', '', true);
 		$title = $request->variable ('ml_title', '', true);
 		$url = $request->variable ('ml_url', '', true);
@@ -331,13 +341,13 @@ class multilinks_module {
 		{
 			$utfile = false;
 		}
-		if ($id == -1)
+		if ($uid == -1)
 		{
 			$rows[] = array ('anchor' => $anchor, 'title' => $title, 'url' => $url, 'blank' => $blank, 'icon' => $icon, 'uticon' => $uticon, 'file' => $file, 'utfile' => $utfile);
 		}
 		else
 		{
-			$rows[$id] = array ('anchor' => $anchor, 'title' => $title, 'url' => $url, 'blank' => $blank, 'icon' => $icon, 'uticon' => $uticon, 'file' => $file, 'utfile' => $utfile);
+			$rows[$uid] = array ('anchor' => $anchor, 'title' => $title, 'url' => $url, 'blank' => $blank, 'icon' => $icon, 'uticon' => $uticon, 'file' => $file, 'utfile' => $utfile);
 		}
 		$rows = array_values ($rows);
 		$links = json_encode ($rows);
