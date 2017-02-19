@@ -44,7 +44,7 @@ $lang = array_merge($lang, array(
 	'ACP_ML_TITLE_EXPLAIN'	=> 'Enter here the explanation which should be displayed when the cursor hovers over the link.',
 	'ACP_ML_URL_EXPLAIN'	=> 'Address of the page to display. For instance, URL of phpBB site.',
 	'ACP_ML_BLANK_EXPLAIN'	=> 'Check this box if you want the link to open in a new window.',
-	'ACP_ML_FA_EXPLAIN'		=> 'Enter here the name of the Font Awesome icon to be used. Visit the <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome site</a> to know all possibilities offered by the font. You just have to add the prefix &#8216;fa-’ in front of the name. Selecting "No" (and no graphic file is used) will use fa-external-link (&#xF08e;).',
+	'ACP_ML_FA_EXPLAIN'		=> 'Enter here the name of the Font Awesome icon to be used. Visit the <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome site</a> to know all possibilities offered by the font. You just have to add the prefix &#8216;fa-’ in front of the name. Selecting &ldquo;No&rdquo; (and no graphic file is used) will use fa-external-link (&#xF08e;).',
 	'ACP_ML_ICON_EXPLAIN'	=> 'Enter here the name of the legacy icon to be used. By default, the extension uses icon-faq. See also icon-acp, icon-mcp, icon-search, etc. See the list in styles/colours.css',
 	'ACP_ML_FILE_EXPLAIN'	=> 'If you want to use a remote image as the logo then enter the full url of the image. Otherwise, enter the location of the image file on the server. Allowed file types: gif, png. If the width and height of the image are more than 20x20 pixels, the image will be reduced.',
 	'ACP_ML_TRANSFER'		=> 'Transfer in other table',
