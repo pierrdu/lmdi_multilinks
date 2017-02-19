@@ -199,8 +199,8 @@ class multilinks_module {
 						'FILE_YES'	=> $row['utfile']==true ? 'CHECKED' : '',
 						'FILE_NO'		=> $row['utfile']==false ? 'CHECKED' : '',
 						'PP_ACTION'	=> $this->u_action . '&amp;action=edit&amp;ppap='.$ppap,
-						'S_ADD_URL'	=> true,
-						'S_ADD_PP'	=> $ppap == 'pp' ? true : false,
+						'S_ED_URL'	=> true,
+						'S_ED_PP'	=> $ppap == 'pp' ? true : false,
 						));
 				break;
 				// New item creation

@@ -100,12 +100,15 @@
 </form>
 <!-- ENDIF -->
 
-<!-- IF S_ADD_URL -->
+<!-- IF S_ADD_URL or S_ED_URL -->
 <form id="acp_multilinks_add_url" method="post" action="{A_ACTION}">
 	<fieldset>
-		<legend>{L_ACP_MULTILINK_ADD_URL}<br />
-		<!-- IF S_ADD_PP -->{L_ACP_ADD_URL_PP}<!-- ELSE -->{L_ACP_ADD_URL_AP}<!-- ENDIF -->
-		</legend>
+		<!-- IF S_ED_URL -->
+		<legend><!-- IF S_ED_PP -->{L_ACP_ED_URL_PP}<!-- ELSE -->{L_ACP_ED_URL_AP}<!-- ENDIF --></legend>
+		<!-- ENDIF -->
+		<!-- IF S_ADD_URL -->
+		<legend><!-- IF S_ADD_PP -->{L_ACP_ADD_URL_PP}<!-- ELSE -->{L_ACP_ADD_URL_AP}<!-- ENDIF --></legend>
+		<!-- ENDIF -->
 		<!-- IF S_ERROR_FORM --><ul class="error"><!-- BEGIN error --><li>{error.ERROR_MSG}</li><!-- END error --></ul><!-- ENDIF -->
 		<dl>
 			<dt><label for="ml_anchor">{L_ACP_MULTILINK_ANCHOR}{L_COLON}</label><br />{L_ACP_ML_ANCHOR_EXPLAIN}</dt>
@@ -131,8 +134,8 @@
 		</dl>
 		<dl id="ml_toggle">
 			<dt><label for="ml_file">{L_ACP_MULTILINK_FILE}{L_COLON}</label><br />{L_ACP_ML_FILE_EXPLAIN}</dt>
-			<dd><label><input type="radio" name="use_file" value="1" {FILE_YES} class="radio" />{L_YES}</label><label><input type="radio" name="use_file" value="0" {FILE_NO} class="radio" />{L_NO}</label><br /><input type="text" id= "ml_file" name="ml_file" value="{MLFILE}" /></dd>
-		</dl>		<input type="hidden" name="uid" value="{URL_ID}">
+			<dd><label><input type="radio" name="use_file" value="1" {FILE_YES} class="radio" />{L_YES}</label><label><input type="radio" name="use_file" value="0" {FILE_NO} class="radio" />{L_NO}</label><br /><input type="text" " size="54" id= "ml_file" name="ml_file" value="{MLFILE}" /></dd>
+		</dl><input type="hidden" name="uid" value="{URL_ID}">
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
 			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
