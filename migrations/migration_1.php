@@ -37,6 +37,7 @@ class migration_1 extends \phpbb\db\migration\migration
 				'ACP_MULTILINKS_TITLE',
 					array(
 						'module_basename'	=> '\lmdi\multilinks\acp\multilinks_module',
+						'auth'			=> 'ext_lmdi/multilinks && acl_a_board',
 						'modes'			=> array('settings'),
 					),
 			)),
