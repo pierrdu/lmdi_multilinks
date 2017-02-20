@@ -14,13 +14,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 
-	/* @var \phpbb\user */
 	protected $user;
-	/* @var \phpbb\config\config */
 	protected $config;
-	/** @var \phpbb\config\config_text */
 	protected $config_text;
-	/* @var \phpbb\template\template */
 	protected $template;
 
 
@@ -36,15 +32,21 @@ class listener implements EventSubscriberInterface
 		$this->template = $template;
 	}
 
+
 	static public function getSubscribedEvents ()
 	{
 		return array(
 			'core.user_setup'	=> 'load_language',
 			'core.page_header'	=> 'build_url',
+			// ACP event
+			'core.permissions'	=> 'add_permission',
 		);
 	}
 
 
+	/**
+	* Load the language strings
+	*/
 	public function load_language ($event)
 	{
 		$lang_set_ext = $event['lang_set_ext'];
@@ -56,6 +58,20 @@ class listener implements EventSubscriberInterface
 	}
 
 
+	/**
+	* Add administrative permissions to manage multilinks
+	*/
+	public function add_permission($event)
+	{
+		$permissions = $event['permissions'];
+		$permissions['a_multilinks'] = array('lang' => 'ACL_A_MULTILINKS', 'cat' => 'misc');
+		$event['permissions'] = $permissions;
+	}
+
+
+	/**
+	* Construction of the URL to inject in the navbar
+	*/
 	public function build_url ($event)
 	{
 		if (version_compare ($this->config['version'], '3.2.x', '<'))

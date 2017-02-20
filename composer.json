@@ -3,7 +3,7 @@
 	"type": "phpbb-extension",
 	"description": "Adds outbound links in the navbar",
 	"homepage": "http://www.insecte.org/ext/readme.txt",
-	"version": "1.1.9",
+	"version": "1.1.10",
 	"time": "2017-2-20",
 	"license": "GPL-2.0",
 	"authors": [

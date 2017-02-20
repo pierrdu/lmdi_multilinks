@@ -19,8 +19,8 @@ class multilinks_info
 			'version'		=> '1.0.0',
 			'modes'		=> array (
 				'settings' => array('title' => 'ACP_MULTILINKS_CONFIG',
-				'auth' => 'ext_lmdi/multilinks',
-				'cat' => array('ACP_MULTILINKS_TITLE')),
+					'auth' => 'ext_lmdi/multilinks && acl_a_multilinks',
+					'cat' => array('ACP_MULTILINKS_TITLE')),
 			),
 		);
 	}

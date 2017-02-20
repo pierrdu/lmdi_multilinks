@@ -21,7 +21,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACP_ML_PREPEND'		=> 'Liens ajoutés au début de la barre de navigation',
 	'ACP_ML_PREPEND_EXPLAIN'	=> 'Vous pouvez ajouter un <b>maximum</b> de 5 liens au début de la barre de navigation (avant le lien de la FAQ).',
-	'ACP_ML_NOTE'			=> '<b>Nota bene&nbsp;:</b> Tenez bien compte de l’espace que chacun de ces liens peut occuper dans l’espace disponible. phpBB place tous les éléments dans le menu déroulant Accès rapide s’il n’y a pas assez de place sur la barre de navigation pour afficher vos liens, si bien que la barre de navigation apparaît totalement vide.',
+	'ACP_ML_NOTE'			=> '<b>Nota bene&nbsp;:</b> Tenez bien compte de la place que chacun de ces liens peut occuper dans l’espace disponible sur la barre de navigation. S’il n’y a pas assez de place pour afficher vos liens, phpBB place tous les éléments dans le menu déroulant Accès rapide, si bien que la barre de navigation apparaît totalement vide.',
 	'ML_NAME'				=> 'Texte du lien',
 	'ML_TITLE'			=> 'Texte affiché au survol',
 	'ML_URL'				=> 'URL du lien',
