@@ -166,6 +166,7 @@ class multilinks_module {
 					$db->sql_query($sql1);
 					$db->sql_query($sql2);
 					$db->sql_query($sql3);
+					// Message with link back to the main ACP page
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 				break;
 				case 'move_down':
