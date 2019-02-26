@@ -174,7 +174,7 @@ class multilinks_module {
 					$nid = $request->variable ('nid', 0);
 					$sql1 = "UPDATE " . $this->table . " SET item_id = 0 WHERE item_id = $uid";
 					$sql2 = "UPDATE " . $this->table . " SET item_id = $uid WHERE item_id = $nid";
-					$sql3 = "UPDATE " . $this->table . " SET item_id = $uid WHERE item_id = 0";
+					$sql3 = "UPDATE " . $this->table . " SET item_id = $nid WHERE item_id = 0";
 					$db->sql_query($sql);
 					$db->sql_query($sql1);
 					$db->sql_query($sql2);
