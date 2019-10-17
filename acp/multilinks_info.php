@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - LMDI Multilinks
-* @copyright (c) 2017 Pierre Duhem - LMDI
+* @copyright (c) 2017-2019 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -11,7 +11,7 @@ namespace lmdi\multilinks\acp;
 
 class multilinks_info
 {
-	function module()
+	public function module()
 	{
 		return array(
 			'filename'	=> '\lmdi\multilinks\acp\multilinks_module',

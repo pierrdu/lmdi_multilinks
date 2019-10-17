@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - LMDI Multilinks
-* @copyright (c) 2017 Pierre Duhem — LMDI
+* @copyright (c) 2017-2019 Pierre Duhem — LMDI
 * French version
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *

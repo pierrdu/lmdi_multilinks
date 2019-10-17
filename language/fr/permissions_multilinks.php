@@ -3,7 +3,7 @@
 *
 * LMDI Multilinks extension for the phpBB Forum Software package.
 *
-* @copyright (c) 2017 Pierre Duhem — LMDI
+* @copyright (c) 2017-2019 Pierre Duhem — LMDI
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
@@ -38,5 +38,5 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ACL_A_MULTILINKS'		=> 'Peut gérer les liens multiples',
+	'ACL_A_MULTILINKS'		=> 'Peut gérer les liens multiples.',
 ));

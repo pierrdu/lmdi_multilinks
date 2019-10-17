@@ -1,0 +1,3 @@
+parameters:
+    lmdi.multilinks.tables.multilinks: %core.table_prefix%lmdi_multilinks
+

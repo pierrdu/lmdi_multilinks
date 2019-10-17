@@ -14,22 +14,26 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class listener implements EventSubscriberInterface
 {
 
+	protected $db;
 	protected $user;
 	protected $config;
 	protected $config_text;
 	protected $template;
+	protected $table;
 
 
 	public function __construct(
-		\phpbb\user $user,
+		\phpbb\db\driver\driver_interface $db,
 		\phpbb\config\config $config,
-		\phpbb\config\db_text $config_text,
-		\phpbb\template\template $template)
+		\phpbb\template\template $template,
+		\phpbb\user $user,
+		$ml_table)
 	{
-		$this->user = $user;
+		$this->db = $db;
 		$this->config = $config;
-		$this->config_text = $config_text;
 		$this->template = $template;
+		$this->user = $user;
+		$this->table = $ml_table;
 	}
 
 
@@ -37,7 +41,7 @@ class listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.user_setup'	=> 'load_language',
-			'core.page_header'	=> 'build_url',
+			'core.page_header'	=> 'build_navbar_links',
 			// ACP event
 			'core.permissions'	=> 'add_permission',
 		);
@@ -70,78 +74,38 @@ class listener implements EventSubscriberInterface
 
 
 	/**
-	* Construction of the URL to inject in the navbar
+	* Construction of the links to inject in the navbar
 	*/
-	public function build_url ($event)
+	public function build_navbar_links ($event)
 	{
-		if (version_compare ($this->config['version'], '3.2.x', '<'))
-		{
-			$mlinks_320 = 0;
-		}
-		else
-		{
-			$mlinks_320 = 1;
-		}
-
-		$this->assign_block_vars ('lmdi_multilinks_pp', 'mlpp');
-		$this->assign_block_vars ('lmdi_multilinks_ap', 'mlap');
-
-		$this->template->assign_vars(array(
-			'S_320'	=> $mlinks_320,
-		));
+		$this->local_assign_block_vars(0 /* Prepend */, 'mlpp');
+		$this->local_assign_block_vars(1 /* Append */, 'mlap');
 	}
 
-	private function assign_block_vars ($text, $block)
+
+	private function local_assign_block_vars($ppap, $block)
 	{
-		$links = $this->config_text->get ($text);
-		$rows = json_decode ($links, true);
-		$nb = count ($rows);
-		for ($i = 0; $i < $nb; $i++)
+		$sql = "SELECT * FROM " . $this->table . " WHERE ppap = $ppap AND enabled = 1";
+		$result = $this->db->sql_query($sql);
+		while ($row = $this->db->sql_fetchrow($result))
 		{
-			$row = $rows[$i];
-			$uticon = $utfile = false;
-			$icon = $file = '';
-			$file = $row['file'];
-			$uticon = $row['uticon'];
-			$utfile = $row['utfile'];
-			if ($uticon && $utfile)
+			$icon = $row['icon'];
+			$usicon = $row['usicon'];
+			$pict = $row['pict'];
+			// Do we display to guests ?
+			if ($row['guests'])
 			{
-				$utfile = false;
+				$this->template->assign_block_vars($block, array(
+					'NAME'	=> $row['anchor'],
+					'TITLE'	=> $row['title'],
+					'URL'	=> $row['url'],
+					'BLANK'	=> $row['blank']==true ? 'target="_blank"' : '',
+					'ICON'	=> $icon,
+					'FILE'	=> $pict,
+					'S_ICON'	=> $usicon,
+					));
 			}
-			if (!$uticon && !$utfile)
-			{
-				$uticon = true;
-			}
-			if ($utfile)
-			{
-				$file = $row['file'];
-				if (empty ($file))
-				{
-					$uticon = true;
-				}
-				else
-				{
-					$uticon = false;
-				}
-			}
-			if ($uticon)
-			{
-				$icon = $row['icon'];
-				$utfile = false;
-				if (empty ($icon))
-				{
-					$icon = 'fa-external-link';
-				}
-			}
-			$this->template->assign_block_vars($block, array(
-				'NAME'	=> $row['anchor'],
-				'TITLE'	=> $row['title'],
-				'URL'	=> $row['url'],
-				'BLANK'	=> $row['blank']==true ? 'target="_blank"' : '',
-				'ICON'	=> $icon,
-				'FILE'	=> $file,
-				'S_ICON'	=> $uticon==true ? true : false,
-				));
 		}
+		$this->db->sql_freeresult($result);
 	}
 }

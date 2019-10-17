@@ -1,11 +1,15 @@
+imports:
+    - { resource: tables.yml }
+
 services:
     lmdi.multilinks.listener:
         class: lmdi\multilinks\event\listener
         arguments:
-            - '@user'
+            - '@dbal.conn'
             - '@config'
-            - '@config_text'
             - '@template'
+            - '@user'
+            - '%lmdi.multilinks.tables.multilinks%'
         tags:
             - { name: event.listener }
 

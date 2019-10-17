@@ -1,23 +1,13 @@
-<!-- IF S_320 -->
-	<!-- BEGIN mlap -->
-		<!-- IF mlap.S_ICON -->
-			<li data-last-responsive="true">
-				<a href="{mlap.URL}" title="{mlap.TITLE}" role="menuitem" {mlap.BLANK}>
-				<i class="icon {mlap.ICON} fa-fw" aria-hidden="true"></i><span>{mlap.NAME}</span>
-				</a>
-			</li>
-		<!-- ELSE -->
-			<li data-last-responsive="true">
-				<a href="{mlap.URL}" title="{mlap.TITLE}" {mlap.BLANK}><img src="{mlap.FILE}" style="max-width:20px; max-height:20px; vertical-align: text-bottom;" alt=""><span> {mlap.NAME}</span></a>
-			</li>
-		<!-- ENDIF -->
-	<!-- END mlap -->
-<!-- ELSE -->
-	<!-- BEGIN mlap -->
-		<!-- IF mlap.S_ICON -->
-			<li class="small-icon {mlap.ICON} no-bulletin"><a href="{mlap.URL}" title="{mlap.TITLE}" {mlap.BLANK}>{mlap.NAME}</a></li>
-		<!-- ELSE -->
-			<li class="no-bulletin"><a href="{mlap.URL}" title="{mlap.TITLE}" {mlap.BLANK}><img src="{mlap.FILE}" style="max-width:20px; max-height:20px; vertical-align: text-bottom;" alt=""><span> {mlap.NAME}</span></a></li>
-		<!-- ENDIF -->
-	<!-- END mlap -->
-<!-- ENDIF -->
+<!-- BEGIN mlap -->
+	<!-- IF mlap.S_ICON -->
+		<li data-last-responsive="true">
+			<a href="{mlap.URL}" title="{mlap.TITLE}" role="menuitem" {mlap.BLANK}>
+			<i class="icon {mlap.ICON} fa-fw" aria-hidden="true"></i><span>{mlap.NAME}</span>
+			</a>
+		</li>
+	<!-- ELSE -->
+		<li data-last-responsive="true">
+			<a href="{mlap.URL}" title="{mlap.TITLE}" {mlap.BLANK}><img src="{mlap.FILE}" style="max-width:20px; max-height:20px; vertical-align: text-bottom;" alt=""><span> {mlap.NAME}</span></a>
+		</li>
+	<!-- ENDIF -->
+<!-- END mlap -->

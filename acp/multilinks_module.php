@@ -33,14 +33,6 @@ class multilinks_module {
 
 		$ppap = $request->variable ('ppap', 0); // false = prepend, true = append
 
-		if (version_compare ($config['version'], '3.2.x', '<'))
-		{
-			$mlinks_320 = 0;
-		}
-		else
-		{
-			$mlinks_320 = 1;
-		}
 		$action = $request->variable ('action', '');
 
 		// Deletion cancelled => plain display of data
@@ -108,12 +100,12 @@ class multilinks_module {
 					$result = $db->sql_query($sql);
 					$row = $db->sql_fetchrow($result);
 					$template->assign_vars(array(
-						'S_320'		=> $mlinks_320,
 						'URL_ID'		=> $uid,
 						'ANCHOR'		=> $row['anchor'],
 						'TITLE'		=> $row['title'],
 						'URL'		=> $row['url'],
 						'ENABLED'		=> $row['enabled']==true ? 'CHECKED' : '',
+						'GUESTS'		=> $row['guests']==true ? 'CHECKED' : '',
 						'BLANK'		=> $row['blank']==true ? 'CHECKED' : '',
 						'MLICON'		=> $row['icon'],
 						'MLFILE'		=> $row['pict'],
@@ -130,12 +122,12 @@ class multilinks_module {
 				// New item creation
 				case 'add' :
 					$template->assign_vars(array(
-						'S_320'		=> $mlinks_320,
 						'URL_ID'		=> -1,
 						'ANCHOR'		=> '',
 						'TITLE'		=> '',
 						'URL'		=> '',
 						'ENABLED'		=> '',
+						'GUESTS'		=> '',
 						'BLANK'		=> '',
 						'MLICON'		=> '',
 						'MLFILE'		=> '',
@@ -154,7 +146,7 @@ class multilinks_module {
 					{
 						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
 					}
-					$this->validation_data ($mlinks_320, $ppap);
+					$this->validation_data ($ppap);
 				break;
 				// Moving records up and down
 				case 'move_up':
@@ -245,6 +237,7 @@ class multilinks_module {
 				'TITLE'			=> $row['title'],
 				'URL'			=> $row['url'],
 				'ENABLED'			=> $row['enabled'] ? $str_checked : $str_unchecked,
+				'GUESTS'			=> $row['guests'] ? $str_checked : $str_unchecked,
 				'U_ML_MOVE_UP'		=> $this->u_action . "&amp;action=move_up&amp;ppap=$ppap&amp;uid=$uid$str_pid&amp;hash=" . generate_link_hash($form_name),
 				'U_ML_MOVE_DOWN'	=> $this->u_action . "&amp;action=move_down&amp;ppap=$ppap&amp;uid=$uid$str_nid&amp;hash=" . generate_link_hash($form_name),
 				'U_ML_EDIT'		=> $this->u_action . "&amp;action=edit&amp;ppap=$ppap&amp;uid=$uid",
@@ -257,6 +250,7 @@ class multilinks_module {
 		$db->sql_freeresult($result);
 	}
 
+
 	private function sanity_check ($var, $length)
 	{
 		global $db;
@@ -267,7 +261,7 @@ class multilinks_module {
 	}
 
 
-	private function validation_data ($mlinks_320, $ppap)
+	private function validation_data ($ppap)
 	{
 		global $request, $user, $db;
 
@@ -283,6 +277,7 @@ class multilinks_module {
 		$url = $request->variable ('ml_url', '', true);
 		$url = $this->sanity_check ($url, 512);
 		$enabled = (int) $request->variable('ml_enabled', false);
+		$guests = (int) $request->variable('ml_guests', false);
 		$blank = (int) $request->variable('ml_blank', false);
 		$usicon = (int) $request->variable('use_icon', false);
 		$usfile = (int) $request->variable('use_file', false);
@@ -294,17 +289,10 @@ class multilinks_module {
 		// Default icons if empty
 		if (empty ($icon))
 		{
-			if ($mlinks_320)
-			{
-				$icon = 'fa-external-link';
-			}
-			else
-			{
-				$icon = 'icon-faq';
-			}
+			$icon = 'fa-external-link';
 		}
 		// FA icon without the 'fa-' prefix
-		if (!empty ($icon) && $mlinks_320)
+		if (!empty ($icon))
 		{
 			if (substr ($icon, 0, 3) != 'fa-')
 			{
@@ -314,8 +302,8 @@ class multilinks_module {
 		if ($uid == -1)
 		{
 			$sql = "INSERT INTO ". $this->table ."
-				(anchor, title, icon, pict, url, ppap, enabled, blank, usicon, usfile) 
-				VALUES ('$anchor', '$title', '$icon', '$pict', '$url', $ppap, $enabled, $blank, $usicon, $usfile)";
+				(anchor, title, icon, pict, url, ppap, enabled, blank, usicon, usfile, guests) 
+				VALUES ('$anchor', '$title', '$icon', '$pict', '$url', $ppap, $enabled, $blank, $usicon, $usfile, $guests)";
 			$db->sql_query($sql);
 			$item_id = $db->sql_nextid();
 		}
@@ -331,7 +319,8 @@ class multilinks_module {
 				enabled = $enabled,
 				blank = $blank,
 				usicon = $usicon,
-				usfile = $usfile
+				usfile = $usfile,
+				guests = $guests
 				WHERE item_id = $uid";
 			$db->sql_query($sql);
 		}
