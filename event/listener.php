@@ -93,7 +93,13 @@ class listener implements EventSubscriberInterface
 			$usicon = $row['usicon'];
 			$pict = $row['pict'];
 			// Do we display to guests ?
-			if ($row['guests'])
+			$user = (int) $this->user->data['user_id'];
+			$guests = (int) $row['guests'];
+			if ($user == 1 && !$guests)
+			{
+				continue;
+			}
+			else
 			{
 				$this->template->assign_block_vars($block, array(
 					'NAME'	=> $row['anchor'],
