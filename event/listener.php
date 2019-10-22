@@ -2,7 +2,7 @@
 /*
 *
 * @package LMDI Multilinks
-* @copyright (c) 2017 Pierre Duhem - LMDI
+* @copyright (c) 2017-2019 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -17,7 +17,6 @@ class listener implements EventSubscriberInterface
 	protected $db;
 	protected $user;
 	protected $config;
-	protected $config_text;
 	protected $template;
 	protected $table;
 

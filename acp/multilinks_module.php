@@ -167,9 +167,9 @@ class multilinks_module {
 					$sql1 = "UPDATE " . $this->table . " SET item_id = 0 WHERE item_id = $uid";
 					$sql2 = "UPDATE " . $this->table . " SET item_id = $uid WHERE item_id = $nid";
 					$sql3 = "UPDATE " . $this->table . " SET item_id = $nid WHERE item_id = 0";
-					$db->sql_query($sql);
 					$db->sql_query($sql1);
 					$db->sql_query($sql2);
+					$db->sql_query($sql3);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 				break;
 			}
@@ -215,6 +215,7 @@ class multilinks_module {
 		// Compute the table lines
 		$cpteur = 0;
 		$nb = count ($idset);
+		$idset[] = -1;
 		while ($row = $db->sql_fetchrow($result))
 		{
 			$uid = $row['item_id'];
@@ -227,7 +228,7 @@ class multilinks_module {
 			}
 			if ($cpteur < $nb)
 			{
-				$nid = $idset[$cpteur];
+				$nid = $idset[$cpteur + 1];
 				$str_nid .= $nid;
 			}
 			$str_checked = "<input type='checkbox' name='enabled' checked disabled>";
