@@ -63,7 +63,7 @@ class multilinks_module {
 					{
 						$uid = (int) $request->variable('uid', -1);
 						$var_ppap = (int) !$ppap;
-						$sql = "UPDATE " . $this->table . " SET ppap = $var_ppap WHERE item_id = $uid";
+						$sql = "UPDATE " . $this->table . " SET ppap = $var_ppap WHERE sort = $uid";
 						$db->sql_query($sql);
 						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 					}
@@ -77,7 +77,7 @@ class multilinks_module {
 					if (confirm_box(true))
 					{
 						$uid = (int) $request->variable('uid', -1);
-						$sql = "DELETE FROM " . $this->table . " WHERE item_id = $uid";
+						$sql = "DELETE FROM " . $this->table . " WHERE sort = $uid";
 						$db->sql_query($sql);
 						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
 					}
@@ -96,7 +96,7 @@ class multilinks_module {
 				// Item edition
 				case 'edit' :
 					$uid = $request->variable('uid', -1);
-					$sql = "SELECT * FROM " . $this->table . " WHERE item_id = $uid";
+					$sql = "SELECT * FROM " . $this->table . " WHERE sort = $uid";
 					$result = $db->sql_query($sql);
 					$row = $db->sql_fetchrow($result);
 					$template->assign_vars(array(
@@ -152,9 +152,9 @@ class multilinks_module {
 				case 'move_up':
 					$uid = $request->variable ('uid', 0);
 					$pid = $request->variable ('pid', 0);
-					$sql1 = "UPDATE " . $this->table . " SET item_id = 0 WHERE item_id = $uid";
-					$sql2 = "UPDATE " . $this->table . " SET item_id = $uid WHERE item_id = $pid";
-					$sql3 = "UPDATE " . $this->table . " SET item_id = $pid WHERE item_id = 0";
+					$sql1 = "UPDATE " . $this->table . " SET sort = 0 WHERE sort = $uid";
+					$sql2 = "UPDATE " . $this->table . " SET sort = $uid WHERE sort = $pid";
+					$sql3 = "UPDATE " . $this->table . " SET sort = $pid WHERE sort = 0";
 					$db->sql_query($sql1);
 					$db->sql_query($sql2);
 					$db->sql_query($sql3);
@@ -164,9 +164,9 @@ class multilinks_module {
 				case 'move_down':
 					$uid = $request->variable ('uid', 0);
 					$nid = $request->variable ('nid', 0);
-					$sql1 = "UPDATE " . $this->table . " SET item_id = 0 WHERE item_id = $uid";
-					$sql2 = "UPDATE " . $this->table . " SET item_id = $uid WHERE item_id = $nid";
-					$sql3 = "UPDATE " . $this->table . " SET item_id = $nid WHERE item_id = 0";
+					$sql1 = "UPDATE " . $this->table . " SET sort = 0 WHERE sort = $uid";
+					$sql2 = "UPDATE " . $this->table . " SET sort = $uid WHERE sort = $nid";
+					$sql3 = "UPDATE " . $this->table . " SET sort = $nid WHERE sort = 0";
 					$db->sql_query($sql1);
 					$db->sql_query($sql2);
 					$db->sql_query($sql3);
@@ -199,14 +199,14 @@ class multilinks_module {
 	{
 		global $template, $db;
 
-		$sql = "SELECT * FROM " . $this->table . " WHERE ppap = $ppap ORDER BY enabled DESC";
+		$sql = "SELECT * FROM " . $this->table . " WHERE ppap = $ppap ORDER BY enabled DESC, sort";
 		$result = $db->sql_query($sql);
 		// Compute the set of ids
 		$idset = array();
 		$cpteur = 0;
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$uid = $row['item_id'];
+			$uid = $row['sort'];
 			$idset[] = $uid;
 			$cpteur++;
 		}
@@ -218,7 +218,7 @@ class multilinks_module {
 		$idset[] = -1;
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$uid = $row['item_id'];
+			$uid = $row['sort'];
 			$str_pid = "&amp;pid=";
 			$str_nid = "&amp;nid=";
 			if ($cpteur)
@@ -306,7 +306,7 @@ class multilinks_module {
 				(anchor, title, icon, pict, url, ppap, enabled, blank, usicon, usfile, guests) 
 				VALUES ('$anchor', '$title', '$icon', '$pict', '$url', $ppap, $enabled, $blank, $usicon, $usfile, $guests)";
 			$db->sql_query($sql);
-			$item_id = $db->sql_nextid();
+			$sort = $db->sql_nextid();
 		}
 		else
 		{
@@ -322,7 +322,7 @@ class multilinks_module {
 				usicon = $usicon,
 				usfile = $usfile,
 				guests = $guests
-				WHERE item_id = $uid";
+				WHERE sort = $uid";
 			$db->sql_query($sql);
 		}
 		trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));

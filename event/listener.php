@@ -84,7 +84,7 @@ class listener implements EventSubscriberInterface
 
 	private function local_assign_block_vars($ppap, $block)
 	{
-		$sql = "SELECT * FROM " . $this->table . " WHERE ppap = $ppap AND enabled = 1";
+		$sql = "SELECT * FROM " . $this->table . " WHERE ppap = $ppap AND enabled = 1 ORDER BY sort";
 		$result = $this->db->sql_query($sql);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -94,7 +94,7 @@ class listener implements EventSubscriberInterface
 			// Do we display to guests ?
 			$user = (int) $this->user->data['user_id'];
 			$guests = (int) $row['guests'];
-			if ($user == 1 && !$guests)
+			if ($user == ANONYMOUS && !$guests)
 			{
 				continue;
 			}
