@@ -219,7 +219,6 @@ class multilinks_module {
 		while ($row = $db->sql_fetchrow($result))
 		{
 			$uid = $row['sort'];
-			var_dump ($uid);
 			$str_pid = "&amp;pid=";
 			$str_nid = "&amp;nid=";
 			if ($cpteur)
