@@ -71,7 +71,7 @@ class multilinks_module {
 					{
 						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
 					}
-				break;
+					break;
 				// Item deletion
 				case 'delete' :
 					if (confirm_box(true))
@@ -92,7 +92,7 @@ class multilinks_module {
 							))
 						);
 					}
-				break;
+					break;
 				// Item edition
 				case 'edit' :
 					$uid = $request->variable('uid', -1);
@@ -118,7 +118,7 @@ class multilinks_module {
 						'S_ED_PP'	=> $ppap == 'pp' ? true : false,
 						));
 					$db->sql_freeresult($result);
-				break;
+					break;
 				// New item creation
 				case 'add' :
 					$template->assign_vars(array(
@@ -139,7 +139,7 @@ class multilinks_module {
 						'S_ADD_URL'	=> true,
 						'S_ADD_PP'	=> $ppap == 'pp' ? true : false,
 						));
-				break;
+					break;
 				// Saving the new or edited item
 				case 'save' :
 					if (!check_form_key($form_name))
@@ -147,7 +147,7 @@ class multilinks_module {
 						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
 					}
 					$this->validation_data ($ppap);
-				break;
+					break;
 				// Moving records up and down
 				case 'move_up':
 					$uid = $request->variable ('uid', 0);
@@ -160,7 +160,7 @@ class multilinks_module {
 					$db->sql_query($sql3);
 					// Message with link back to the main ACP page
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-				break;
+					break;
 				case 'move_down':
 					$uid = $request->variable ('uid', 0);
 					$nid = $request->variable ('nid', 0);
@@ -171,7 +171,7 @@ class multilinks_module {
 					$db->sql_query($sql2);
 					$db->sql_query($sql3);
 					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
-				break;
+					break;
 			}
 		}
 		// Default action = display
@@ -219,6 +219,7 @@ class multilinks_module {
 		while ($row = $db->sql_fetchrow($result))
 		{
 			$uid = $row['sort'];
+			var_dump ($uid);
 			$str_pid = "&amp;pid=";
 			$str_nid = "&amp;nid=";
 			if ($cpteur)
@@ -239,6 +240,7 @@ class multilinks_module {
 				'URL'			=> $row['url'],
 				'ENABLED'			=> $row['enabled'] ? $str_checked : $str_unchecked,
 				'GUESTS'			=> $row['guests'] ? $str_checked : $str_unchecked,
+				'BLANK'			=> $row['blank'] ? $str_checked : $str_unchecked,
 				'U_ML_MOVE_UP'		=> $this->u_action . "&amp;action=move_up&amp;ppap=$ppap&amp;uid=$uid$str_pid&amp;hash=" . generate_link_hash($form_name),
 				'U_ML_MOVE_DOWN'	=> $this->u_action . "&amp;action=move_down&amp;ppap=$ppap&amp;uid=$uid$str_nid&amp;hash=" . generate_link_hash($form_name),
 				'U_ML_EDIT'		=> $this->u_action . "&amp;action=edit&amp;ppap=$ppap&amp;uid=$uid",
@@ -282,6 +284,7 @@ class multilinks_module {
 		$blank = (int) $request->variable('ml_blank', false);
 		$usicon = (int) $request->variable('use_icon', false);
 		$usfile = (int) $request->variable('use_file', false);
+		$sort = $uid;
 		// Using icon by default
 		if (!$usfile && !$usicon)
 		{
@@ -306,7 +309,9 @@ class multilinks_module {
 				(anchor, title, icon, pict, url, ppap, enabled, blank, usicon, usfile, guests) 
 				VALUES ('$anchor', '$title', '$icon', '$pict', '$url', $ppap, $enabled, $blank, $usicon, $usfile, $guests)";
 			$db->sql_query($sql);
-			$sort = $db->sql_nextid();
+			$uid = $db->sql_nextid();
+			$sql = "UPDATE " . $this->table . " SET sort = $uid WHERE item_id = $uid";
+			$db->sql_query($sql);
 		}
 		else
 		{
