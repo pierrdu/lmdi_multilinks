@@ -19,7 +19,7 @@ class multilinks_module {
 
 	public function main ($id, $mode)
 	{
-		global $user, $config, $db, $template, $request, $phpbb_container, $table_prefix;
+		global $language, $config, $db, $template, $request, $phpbb_container, $table_prefix;
 
 		$this->path_helper = $phpbb_container->get('lmdi.multilinks.multilinks_path_helper');
 		$this->ext_path = $this->path_helper->get_ext_path_web ();
@@ -27,9 +27,9 @@ class multilinks_module {
 		$form_name = 'acp_multilinks';
 		$this->table = $table_prefix . 'lmdi_multilinks';
 
-		$user->add_lang_ext ('lmdi/multilinks', 'acp_multilinks');
+		$language->add_lang ('acp_multilinks', 'lmdi/multilinks');
 		$this->tpl_name = 'acp_multilinks_body';
-		$this->page_title = $user->lang['ACP_MULTILINKS_TITLE'];
+		$this->page_title = $language->lang('ACP_MULTILINKS_TITLE');
 
 		$ppap = $request->variable ('ppap', 0); // false = prepend, true = append
 
@@ -65,11 +65,11 @@ class multilinks_module {
 						$var_ppap = (int) !$ppap;
 						$sql = "UPDATE " . $this->table . " SET ppap = $var_ppap WHERE sort = $uid";
 						$db->sql_query($sql);
-						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+						trigger_error($language->lang('MULTILINK_CONFIG_UPDATED') . adm_back_link($this->u_action));
 					}
 					else
 					{
-						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
+						trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action));
 					}
 					break;
 				// Item deletion
@@ -79,12 +79,12 @@ class multilinks_module {
 						$uid = (int) $request->variable('uid', -1);
 						$sql = "DELETE FROM " . $this->table . " WHERE sort = $uid";
 						$db->sql_query($sql);
-						trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+						trigger_error($language->lang('MULTILINK_CONFIG_UPDATED') . adm_back_link($this->u_action));
 					}
 					else
 					{
 						$uid = $request->variable('uid', -1);
-						confirm_box(false, $user->lang['CONFIRM_OPERATION'], build_hidden_fields(array(
+						confirm_box(false, $language->lang('CONFIRM_OPERATION'), build_hidden_fields(array(
 							'i' => $id,
 							'mode' => $mode,
 							'action' => $action,
@@ -144,7 +144,7 @@ class multilinks_module {
 				case 'save' :
 					if (!check_form_key($form_name))
 					{
-						trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action));
+						trigger_error($language->lang('FORM_INVALID') . adm_back_link($this->u_action));
 					}
 					$this->validation_data ($ppap);
 					break;
@@ -159,7 +159,7 @@ class multilinks_module {
 					$db->sql_query($sql2);
 					$db->sql_query($sql3);
 					// Message with link back to the main ACP page
-					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					trigger_error($language->lang('MULTILINK_CONFIG_UPDATED') . adm_back_link($this->u_action));
 					break;
 				case 'move_down':
 					$uid = $request->variable ('uid', 0);
@@ -170,7 +170,7 @@ class multilinks_module {
 					$db->sql_query($sql1);
 					$db->sql_query($sql2);
 					$db->sql_query($sql3);
-					trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+					trigger_error($language->lang('MULTILINK_CONFIG_UPDATED') . adm_back_link($this->u_action));
 					break;
 			}
 		}
@@ -181,7 +181,7 @@ class multilinks_module {
 			$this->assign_block_vars ('mlap', 1 /* _AP_ */, $form_name);
 			$pict = $this->ext_path . 'adm/style/icon_trans.gif';
 			$pictno = $this->ext_path . 'adm/style/icon_trans_disabled.gif';
-			$altstr = $user->lang['ACP_ML_TRANSFER'];
+			$altstr = $language->lang('ACP_ML_TRANSFER');
 			$template->assign_vars(array(
 				'PP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=0', // _PP_
 				'AP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=1', // _AP_
@@ -265,7 +265,7 @@ class multilinks_module {
 
 	private function validation_data ($ppap)
 	{
-		global $request, $user, $db;
+		global $request, $db;
 
 		$uid = $request->variable('uid', -1);
 		$anchor = $request->variable ('ml_anchor', '', true);
@@ -329,6 +329,6 @@ class multilinks_module {
 				WHERE sort = $uid";
 			$db->sql_query($sql);
 		}
-		trigger_error($user->lang['MULTILINK_CONFIG_UPDATED'] . adm_back_link($this->u_action));
+		trigger_error($language->lang('MULTILINK_CONFIG_UPDATED') . adm_back_link($this->u_action));
 	}
 }

@@ -1,169 +1,169 @@
-<!-- INCLUDE overall_header.html -->
-<!-- INCLUDECSS acp_multilinks.css -->
+{% INCLUDE 'overall_header.html' %}
+{% INCLUDECSS 'acp_multilinks.css' %}
 
 <a id="maincontent"></a>
-<h1>{L_ACP_MULTILINKS_TITLE}</h1>
+<h1>{{ lang('ACP_MULTILINKS_TITLE') }}</h1>
 
 <!--
 <fieldset>
 	<p>
-	<strong>{L_ACP_ML_HIDELINKS}{L_COLON}</strong>
-	<br>	<span>{L_ACP_ML_HIDELINKS_EXPLAIN}</span>
+	<strong>{{ lang('ACP_ML_HIDELINKS') }}{{ lang('COLON') }}</strong>
+	<br>	<span>{{ lang('ACP_ML_HIDELINKS_EXPLAIN') }}</span>
 	</p>
 </fieldset>
 -->
 
-<!-- IF S_CONFIG_PAGE -->
-<p>{L_ACP_MULTILINKS_CONFIG}</p>
-<form id="acp_multilinks" method="post" action="{U_ACTION}">
+{% if S_CONFIG_PAGE %}
+<p>{{ lang('ACP_MULTILINKS_CONFIG') }}</p>
+<form id="acp_multilinks" method="post" action="{{ U_ACTION }}">
 <fieldset>
 	<p>
-	<strong>{L_ACP_ML_PREPEND}{L_COLON}</strong>
-	<br>	<span>{L_ACP_ML_PREPEND_EXPLAIN}</span>
+	<strong>{{ lang('ACP_ML_PREPEND') }}{{ lang('COLON') }}</strong>
+	<br>	<span>{{ lang('ACP_ML_PREPEND_EXPLAIN') }}</span>
 	</p>
 	</dl>
 	<table cellspacing="1">
 	<thead>
 		<tr>
-			<th>{L_ML_NAME}</th>
-			<th>{L_ML_TITLE}</th>
-			<th>{L_ML_URL}</th>
-			<th>{L_ML_ENABLED}</th>
-			<th>{L_ML_GUESTS}</th>
-			<th style="text-align: center;">{L_ACTION}</th>
+			<th>{{ lang('ML_NAME') }}</th>
+			<th>{{ lang('ML_TITLE') }}</th>
+			<th>{{ lang('ML_URL') }}</th>
+			<th>{{ lang('ML_ENABLED') }}</th>
+			<th>{{ lang('ML_GUESTS') }}</th>
+			<th style="text-align: center;">{{ lang('ACTION') }}</th>
 		</tr>
 	</thead>
 	<tbody>
-	<!-- BEGIN mlpp -->
-		<!-- IF mlpp.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
-			<td>{mlpp.NAME}</td>
-			<td>{mlpp.TITLE}</td>
-			<td>{mlpp.URL}</td>
-			<td>{mlpp.ENABLED}</td>
-			<td>{mlpp.GUESTS}</td>
+	{% for mlpp in loops.mlpp %}
+		{% if mlpp.S_ROW_COUNT is even %}<tr class="row1">{% else %}<tr class="row2">{% endif %}
+			<td>{{ mlpp.NAME }}</td>
+			<td>{{ mlpp.TITLE }}</td>
+			<td>{{ mlpp.URL }}</td>
+			<td>{{ mlpp.ENABLED }}</td>
+			<td>{{ mlpp.GUESTS }}</td>
 			<td class="actions" style="text-align: center;">
-				<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
-				<span class="up"><a href="{mlpp.U_ML_MOVE_UP}">{ICON_MOVE_UP}</a></span>
-				<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
-				<span class="down"><a href="{mlpp.U_ML_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
-				<a href="{mlpp.U_ML_EDIT}">{ICON_EDIT}</a>
-				<a href="{mlpp.U_ML_DELETE}">{ICON_DELETE}</a>
-				<!-- IF S_DISABLE_AP -->
-					{ICON_ML_TRANSNO}
-				<!-- ELSE -->
-					<a href="{mlpp.U_ML_TRANSFER}">{ICON_ML_TRANSFER}</a>
-				<!-- ENDIF -->
+				<span class="up-disabled" style="display:none;">{{ ICON_MOVE_UP_DISABLED }}</span>
+				<span class="up"><a href="{{ mlpp.U_ML_MOVE_UP }}">{{ ICON_MOVE_UP }}</a></span>
+				<span class="down-disabled" style="display:none;">{{ ICON_MOVE_DOWN_DISABLED }}</span>
+				<span class="down"><a href="{{ mlpp.U_ML_MOVE_DOWN }}">{{ ICON_MOVE_DOWN }}</a></span>
+				<a href="{{ mlpp.U_ML_EDIT }}">{{ ICON_EDIT }}</a>
+				<a href="{{ mlpp.U_ML_DELETE }}">{{ ICON_DELETE }}</a>
+				{% if S_DISABLE_AP %}
+					{{ ICON_ML_TRANSNO }}
+				{% else %}
+					<a href="{{ mlpp.U_ML_TRANSFER }}">{{ ICON_ML_TRANSFER }}</a>
+				{% endif %}
 			</td>
 		</tr>
-	<!-- END mlpp -->
+	{% endfor %}
 	</tbody>
 	</table>
-	<p class="quick"><a class="button2" href="{PP_ACTION}">{L_ML_ADD_LINK}</a></p>
+	<p class="quick"><a class="button2" href="{{ PP_ACTION }}">{{ lang('ML_ADD_LINK') }}</a></p>
 </fieldset>
 
 <fieldset>
 	<p>
-	<strong>{L_ACP_ML_APPEND}{L_COLON}</strong>
-	<br><span>{L_ACP_ML_APPEND_EXPLAIN}</span>
+	<strong>{{ lang('ACP_ML_APPEND') }}{{ lang('COLON') }}</strong>
+	<br><span>{{ lang('ACP_ML_APPEND_EXPLAIN') }}</span>
 	</p>
 	<table cellspacing="1">
 	<thead>
 		<tr>
-			<th>{L_ML_NAME}</th>
-			<th>{L_ML_TITLE}</th>
-			<th>{L_ML_URL}</th>
-			<th>{L_ML_ENABLED}</th>
-			<th>{L_ML_GUESTS}</th>
-			<th style="text-align: center;">{L_ACTION}</th>
+			<th>{{ lang('ML_NAME') }}</th>
+			<th>{{ lang('ML_TITLE') }}</th>
+			<th>{{ lang('ML_URL') }}</th>
+			<th>{{ lang('ML_ENABLED') }}</th>
+			<th>{{ lang('ML_GUESTS') }}</th>
+			<th style="text-align: center;">{{ lang('ACTION') }}</th>
 		</tr>
 	</thead>
 	<tbody>
-	<!-- BEGIN mlap -->
-		<!-- IF mlap.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
-			<td>{mlap.NAME}</td>
-			<td>{mlap.TITLE}</td>
-			<td>{mlap.URL}</td>
-			<td>{mlap.ENABLED}</td>
-			<td>{mlap.GUESTS}</td>
+	{% for mlap in loops.mlap %}
+		{% if mlap.S_ROW_COUNT is even %}<tr class="row1">{% else %}<tr class="row2">{% endif %}
+			<td>{{ mlap.NAME }}</td>
+			<td>{{ mlap.TITLE }}</td>
+			<td>{{ mlap.URL }}</td>
+			<td>{{ mlap.ENABLED }}</td>
+			<td>{{ mlap.GUESTS }}</td>
 			<td class="actions" style="text-align: center;">
-				<span class="up-disabled" style="display:none;">{ICON_MOVE_UP_DISABLED}</span>
-				<span class="up"><a href="{mlap.U_ML_MOVE_UP}">{ICON_MOVE_UP}</a></span>
-				<span class="down-disabled" style="display:none;">{ICON_MOVE_DOWN_DISABLED}</span>
-				<span class="down"><a href="{mlap.U_ML_MOVE_DOWN}">{ICON_MOVE_DOWN}</a></span>
-				<a href="{mlap.U_ML_EDIT}">{ICON_EDIT}</a>
-				<a href="{mlap.U_ML_DELETE}">{ICON_DELETE}</a>
-				<!-- IF S_DISABLE_PP -->
-					{ICON_ML_TRANSNO}
-				<!-- ELSE -->
-					<a href="{mlap.U_ML_TRANSFER}">{ICON_ML_TRANSFER}</a>
-				<!-- ENDIF -->
+				<span class="up-disabled" style="display:none;">{{ ICON_MOVE_UP_DISABLED }}</span>
+				<span class="up"><a href="{{ mlap.U_ML_MOVE_UP }}">{{ ICON_MOVE_UP }}</a></span>
+				<span class="down-disabled" style="display:none;">{{ ICON_MOVE_DOWN_DISABLED }}</span>
+				<span class="down"><a href="{{ mlap.U_ML_MOVE_DOWN }}">{{ ICON_MOVE_DOWN }}</a></span>
+				<a href="{{ mlap.U_ML_EDIT }}">{{ ICON_EDIT }}</a>
+				<a href="{{ mlap.U_ML_DELETE }}">{{ ICON_DELETE }}</a>
+				{% if S_DISABLE_PP %}
+					{{ ICON_ML_TRANSNO }}
+				{% else %}
+					<a href="{{ mlap.U_ML_TRANSFER }}">{{ ICON_ML_TRANSFER }}</a>
+				{% endif %}
 			</td>
 		</tr>
-	<!-- END mlap -->
+	{% endfor %}
 	</tbody>
 	</table>
-	<p class="quick"><a class="button2"  href="{AP_ACTION}">{L_ML_ADD_LINK}</a></p>
-	<p><br>{L_ACP_ML_NOTE}</p>
+	<p class="quick"><a class="button2"  href="{{ AP_ACTION }}">{{ lang('ML_ADD_LINK') }}</a></p>
+	<p><br>{{ lang('ACP_ML_NOTE') }}</p>
 </fieldset>
-{S_FORM_TOKEN}
+{{ S_FORM_TOKEN }}
 </form>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- IF S_ADD_URL or S_ED_URL -->
-	<!-- IF S_ED_URL -->
-	<p><!-- IF S_ED_PP -->{L_ACP_ED_URL_PP}<!-- ELSE -->{L_ACP_ED_URL_AP}<!-- ENDIF --></p>
-	<!-- ENDIF -->
-	<!-- IF S_ADD_URL -->
-	<p><!-- IF S_ADD_PP -->{L_ACP_ADD_URL_PP}<!-- ELSE -->{L_ACP_ADD_URL_AP}<!-- ENDIF --></p>
-	<!-- ENDIF -->
-	<form id="acp_multilinks_add_url" method="post" action="{A_ACTION}">
+{% if S_ADD_URL or S_ED_URL %}
+	{% if S_ED_URL %}
+	<p>{% if S_ED_PP %}{{ lang('ACP_ED_URL_PP') }}{% else %}{{ lang('ACP_ED_URL_AP') }}{% endif %}</p>
+	{% endif %}
+	{% if S_ADD_URL %}
+	<p>{% if S_ADD_PP %}{{ lang('ACP_ADD_URL_PP') }}{% else %}{{ lang('ACP_ADD_URL_AP') }}{% endif %}</p>
+	{% endif %}
+	<form id="acp_multilinks_add_url" method="post" action="{{ A_ACTION }}">
 	<fieldset>
-		<!-- IF S_ERROR_FORM --><ul class="error"><!-- BEGIN error --><li>{error.ERROR_MSG}</li><!-- END error --></ul><!-- ENDIF -->
+		{% if S_ERROR_FORM %}<ul class="error">{% for error in loops.error %}<li>{{ error.ERROR_MSG }}</li>{% endfor %}</ul>{% endif %}
 		<dl>
-			<dt><label for="ml_anchor">{L_ACP_MULTILINK_ANCHOR}{L_COLON}</label><br />{L_ACP_ML_ANCHOR_EXPLAIN}</dt>
-			<dd><input type="text" size="54" id="ml_anchor" name="ml_anchor" value="{ANCHOR}" /></dd>
+			<dt><label for="ml_anchor">{{ lang('ACP_MULTILINK_ANCHOR') }}{{ lang('COLON') }}</label><br />{{ lang('ACP_ML_ANCHOR_EXPLAIN') }}</dt>
+			<dd><input type="text" size="54" id="ml_anchor" name="ml_anchor" value="{{ ANCHOR }}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="ml_title">{L_ACP_MULTILINK_TITLE}{L_COLON}</label><br />{L_ACP_ML_TITLE_EXPLAIN}</dt>
-			<dd><textarea id="ml_title" name="ml_title" rows="3" cols="30" data-bbcode="false">{TITLE}</textarea></dd>
+			<dt><label for="ml_title">{{ lang('ACP_MULTILINK_TITLE') }}{{ lang('COLON') }}</label><br />{{ lang('ACP_ML_TITLE_EXPLAIN') }}</dt>
+			<dd><textarea id="ml_title" name="ml_title" rows="3" cols="30" data-bbcode="false">{{ TITLE }}</textarea></dd>
 		</dl>
 		<dl>
-			<dt><label for="ml_url">{L_ACP_MULTILINK_URL}{L_COLON}</label><br />{L_ACP_ML_URL_EXPLAIN}</dt>
-			<dd><input type="text" size="54" id="ml_url" name="ml_url" value="{URL}" /></dd>
+			<dt><label for="ml_url">{{ lang('ACP_MULTILINK_URL') }}{{ lang('COLON') }}</label><br />{{ lang('ACP_ML_URL_EXPLAIN') }}</dt>
+			<dd><input type="text" size="54" id="ml_url" name="ml_url" value="{{ URL }}" /></dd>
 		</dl>
 		<dl>
-			<dt><label for="ml_enabled">{L_ACP_MULTILINK_ENABLED}{L_COLON}</label><br />{L_ACP_ML_ENABLED_EXPLAIN}</dt>
-			<dd><input type="checkbox" class="radio" id="ml_enabled" name="ml_enabled" value="1" {ENABLED} /></dd>
+			<dt><label for="ml_enabled">{{ lang('ACP_MULTILINK_ENABLED') }}{{ lang('COLON') }}</label><br />{{ lang('ACP_ML_ENABLED_EXPLAIN') }}</dt>
+			<dd><input type="checkbox" class="radio" id="ml_enabled" name="ml_enabled" value="1" {{ ENABLED }} /></dd>
 		</dl>
 		<dl>
-			<dt><label for="ml_enabled">{L_ACP_ML_HIDEGUESTS}{L_COLON}</label><br />{L_ACP_ML_HIDEGUESTS_EXPLAIN}</dt>
-			<dd><input type="checkbox" class="radio" id="ml_guests" name="ml_guests" value="1" {GUESTS} /></dd>
+			<dt><label for="ml_enabled">{{ lang('ACP_ML_HIDEGUESTS') }}{{ lang('COLON') }}</label><br />{{ lang('ACP_ML_HIDEGUESTS_EXPLAIN') }}</dt>
+			<dd><input type="checkbox" class="radio" id="ml_guests" name="ml_guests" value="1" {{ GUESTS }} /></dd>
 		</dl>
 		<dl>
-			<dt><label for="ml_blank">{L_ACP_MULTILINK_BLANK}{L_COLON}</label><br />{L_ACP_ML_BLANK_EXPLAIN}</dt>
-			<dd><input type="checkbox" class="radio" id="ml_blank" name="ml_blank" value="1" {BLANK} /></dd>
+			<dt><label for="ml_blank">{{ lang('ACP_MULTILINK_BLANK') }}{{ lang('COLON') }}</label><br />{{ lang('ACP_ML_BLANK_EXPLAIN') }}</dt>
+			<dd><input type="checkbox" class="radio" id="ml_blank" name="ml_blank" value="1" {{ BLANK }} /></dd>
 		</dl>
 		<dl>
-			<dt><label for="ml_icon">{L_ACP_MULTILINK_FA}{L_COLON}</label>
-			<br />{L_ACP_ML_FA_EXPLAIN}
+			<dt><label for="ml_icon">{{ lang('ACP_MULTILINK_FA') }}{{ lang('COLON') }}</label>
+			<br />{{ lang('ACP_ML_FA_EXPLAIN') }}
 			</dt>
-			<dd><label><input type="radio" name="use_icon" value="1" {ICON_YES} class="radio" />{L_YES}</label>
-			<label><input type="radio" name="use_icon" value="0" {ICON_NO} class="radio" id="ml_icon_no" />{L_NO}</label><br /><input type="text" id= "ml_icon" name="ml_icon" value="{MLICON}" /></dd>
+			<dd><label><input type="radio" name="use_icon" value="1" {{ ICON_YES }} class="radio" />{{ lang('YES') }}</label>
+			<label><input type="radio" name="use_icon" value="0" {{ ICON_NO }} class="radio" id="ml_icon_no" />{{ lang('NO') }}</label><br /><input type="text" id= "ml_icon" name="ml_icon" value="{{ MLICON }}" /></dd>
 		</dl>
 		<dl id="ml_toggle">
-			<dt><label for="ml_file">{L_ACP_MULTILINK_FILE}{L_COLON}</label><br />{L_ACP_ML_FILE_EXPLAIN}</dt>
-			<dd><label><input type="radio" name="use_file" value="1" {FILE_YES} class="radio" id="ml_file_yes"/>{L_YES}</label>
-			<label><input type="radio" name="use_file" value="0" {FILE_NO} class="radio" />{L_NO}</label><br /><input type="text" size="54" id= "ml_file" name="ml_file" value="{MLFILE}" /></dd>
+			<dt><label for="ml_file">{{ lang('ACP_MULTILINK_FILE') }}{{ lang('COLON') }}</label><br />{{ lang('ACP_ML_FILE_EXPLAIN') }}</dt>
+			<dd><label><input type="radio" name="use_file" value="1" {{ FILE_YES }} class="radio" id="ml_file_yes"/>{{ lang('YES') }}</label>
+			<label><input type="radio" name="use_file" value="0" {{ FILE_NO }} class="radio" />{{ lang('NO') }}</label><br /><input type="text" size="54" id= "ml_file" name="ml_file" value="{{ MLFILE }}" /></dd>
 		</dl>
-		<input type="hidden" name="uid" value="{URL_ID}">
+		<input type="hidden" name="uid" value="{{ URL_ID }}">
 		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
 		</p>
 	</fieldset>
-{S_FORM_TOKEN}
+{{ S_FORM_TOKEN }}
 </form>
-<!-- ENDIF -->
+{% endif %}
 
 <script>
 // <![CDATA[
@@ -177,5 +177,5 @@ document.onreadystatechange = function() {
 // ]]>
 </script>
 
-<!-- INCLUDE overall_footer.html -->
+{% INCLUDE 'overall_footer.html' %}
 
