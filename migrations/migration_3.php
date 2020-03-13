@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - LMDI Multilinks
-* @copyright (c) 2017-2019 Pierre Duhem - LMDI
+* @copyright (c) 2017-2020 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -22,11 +22,12 @@ class migration_3 extends \phpbb\db\migration\migration
 	{
 		return array(
 			'add_columns' => array(
-				$this->table_prefix . 'lmdi_multilinks' => array('sort' => array('UINT'),
+				$this->table_prefix . 'lmdi_multilinks' => array('sort' => array('ULINT', 0),
 				),
 			),
 		);
 	}
+
 
 	public function update_data()
 	{
@@ -35,6 +36,7 @@ class migration_3 extends \phpbb\db\migration\migration
 			array('custom', array(array(&$this, 'duplicate_ids'))),
 		);
 	}
+
 
 	public function duplicate_ids()
 	{

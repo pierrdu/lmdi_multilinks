@@ -1,7 +1,7 @@
 <?php
 /**
 * @package phpBB Extension - LMDI Multilinks
-* @copyright (c) 2017-2019 Pierre Duhem - LMDI
+* @copyright (c) 2017-2020 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -265,7 +265,7 @@ class multilinks_module {
 
 	private function validation_data ($ppap)
 	{
-		global $request, $db;
+		global $request, $db, $language;
 
 		$uid = $request->variable('uid', -1);
 		$anchor = $request->variable ('ml_anchor', '', true);
