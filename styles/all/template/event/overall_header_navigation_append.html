@@ -1,12 +1,12 @@
 {% for mlap in loops.mlap %}
 	{% if mlap.S_ICON %}
-		<li data-last-responsive="true">
+		<li class="multilinks" data-last-responsive="true">
 			<a href="{{ mlap.URL }}" title="{{ mlap.TITLE }}" role="menuitem" {{ mlap.BLANK }}>
 			<i class="icon {{ mlap.ICON }} fa-fw" aria-hidden="true"></i><span>{{ mlap.NAME }}</span>
 			</a>
 		</li>
 	{% else %}
-		<li data-last-responsive="true">
+		<li class="multilinks" data-last-responsive="true">
 			<a href="{{ mlap.URL }}" title="{{ mlap.TITLE }}" {{ mlap.BLANK }}><img src="{{ mlap.FILE }}" style="max-width:20px; max-height:20px; vertical-align: text-bottom;" alt=""><span> {{ mlap.NAME }}</span></a>
 		</li>
 	{% endif %}

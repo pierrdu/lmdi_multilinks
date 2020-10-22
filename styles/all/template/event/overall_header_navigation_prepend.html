@@ -1,12 +1,12 @@
 {% for mlpp in loops.mlpp %}
 	{% if mlpp.S_ICON %}
-		<li data-last-responsive="true">
+		<li class="multilinks" data-last-responsive="true">
 			<a href="{{ mlpp.URL }}" title="{{ mlpp.TITLE }}" role="menuitem" {{ mlpp.BLANK }}>
 			<i class="icon {{ mlpp.ICON }} fa-fw" aria-hidden="true"></i><span>{{ mlpp.NAME }}</span>
 			</a>
 		</li>
 	{% else %}
-		<li data-last-responsive="true">
+		<li class="multilinks" data-last-responsive="true">
 			<a href="{{ mlpp.URL }}" title="{{ mlpp.TITLE }}" {{ mlpp.BLANK }}><img src="{{ mlpp.FILE }}" style="max-width:20px; max-height:20px; vertical-align: text-bottom;" alt=""><span> {{ mlpp.NAME }}</span></a>
 		</li>
 	{% endif %}

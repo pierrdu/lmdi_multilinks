@@ -1,0 +1,12 @@
+/* multilinks.css
+Style elements for the Multilinks Extension
+*/
+
+.multilinks {
+	}
+
+@media only screen and (max-device-width: 450px) {
+	.multilinks {
+		display: none !important;
+		}
+	}
