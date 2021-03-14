@@ -2,20 +2,20 @@
 	"name": "lmdi/multilinks",
 	"type": "phpbb-extension",
 	"description": "Adds outbound links in the navbar",
-	"homepage": "http://www.insecte.org/ext/readme.txt",
-	"version": "2.2.7",
-	"time": "2020-10-22",
-	"license": "GPL-2.0",
+	"homepage": "https://www.insecte.org/ext/readme.txt",
+	"version": "2.2.8",
+	"time": "2021-03-14",
+	"license": "GPL-2.0-only",
 	"authors": [
 		{
 		"name": "Pierre Duhem",
 		"email": "pierre@duhem.com",
-		"homepage": "http://www.insecte.org/ext/readme.txt",
+		"homepage": "https://www.insecte.org/ext/readme.txt",
 		"role": "Extension Developer"
 		},
 		{
 		"name": "cabot",
-		"homepage": "http://cabotweb.fr",
+		"homepage": "https://cabotweb.fr",
 		"role": "SushiMaker with style"
 		}
 	],

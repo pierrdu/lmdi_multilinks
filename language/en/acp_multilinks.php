@@ -50,7 +50,7 @@ $lang = array_merge($lang, array(
 	'ACP_MULTILINK_BLANK'	=> 'Link target="_blank"',
 	'ACP_ML_BLANK_EXPLAIN'	=> 'Check this box if you want the link to open in a new window.',
 	'ACP_MULTILINK_FA'		=> 'Use a Font Awesome link icon',
-	'ACP_ML_FA_EXPLAIN'		=> 'Enter here the name of the Font Awesome icon to be used. Visit the <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome site</a> to know all possibilities offered by the font. You just have to add the prefix &#8216;fa-’ in front of the name. Select &ldquo;No&rdquo; if you want to enter a graphic icon to be used. <b>Note:</b> If no Font Awesome icon or graphic file is specified then the  fa-external-link (&#xF08e;) icon will be used.',
+	'ACP_ML_FA_EXPLAIN'		=> 'Enter here the name of the Font Awesome icon to be used. Visit the <a href="https://fontawesome.io/icons/" target="_blank">Font Awesome site</a> to know all possibilities offered by the font. You just have to add the prefix &#8216;fa-’ in front of the name. Select &ldquo;No&rdquo; if you want to enter a graphic icon to be used. <b>Note:</b> If no Font Awesome icon or graphic file is specified then the  fa-external-link (&#xF08e;) icon will be used.',
 	'ACP_MULTILINK_ICON'	=> 'Use a legacy icon',
 	'ACP_ML_ICON_EXPLAIN'	=> 'Enter here the name of the legacy icon to be used. By default, the extension uses icon-faq. See also icon-acp, icon-mcp, icon-search, etc. See the list in styles/colours.css',
 	'ACP_MULTILINK_FILE'	=> 'Use a graphic file link icon',

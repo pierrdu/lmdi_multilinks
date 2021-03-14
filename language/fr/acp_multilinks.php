@@ -50,7 +50,7 @@ $lang = array_merge($lang, array(
 	'ACP_MULTILINK_BLANK'	=> 'Lien avec target="_blank"',
 	'ACP_ML_BLANK_EXPLAIN'	=> 'Cochez cette case si vous voulez que le lien s’ouvre dans une nouvelle fenêtre.',
 	'ACP_MULTILINK_FA'		=> 'Utiliser une icône Font Awesome',
-	'ACP_ML_FA_EXPLAIN'		=> 'Indiquez ici l’icône Font Awesome à utiliser. Visitez le <a href="http://fontawesome.io/icons/" target="_blank">site Font Awesome</a> pour connaître les possibilités offertes par cette police. Il suffit d’ajouter le préfixe &#8216;fa-’ devant le nom. Choisissez « Non » pour choisir un fichier graphique. Si vous ne spécifiez ni icône, ni fichier graphique, l’icône utilisée est fa-external-link (&#xF08e;).',
+	'ACP_ML_FA_EXPLAIN'		=> 'Indiquez ici l’icône Font Awesome à utiliser. Visitez le <a href="https://fontawesome.io/icons/" target="_blank">site Font Awesome</a> pour connaître les possibilités offertes par cette police. Il suffit d’ajouter le préfixe &#8216;fa-’ devant le nom. Choisissez « Non » pour choisir un fichier graphique. Si vous ne spécifiez ni icône, ni fichier graphique, l’icône utilisée est fa-external-link (&#xF08e;).',
 	'ACP_MULTILINK_ICON'	=> 'Utiliser une icône classique',
 	'ACP_ML_ICON_EXPLAIN'	=> 'Indiquez ici l’icône classique à utiliser. Par défaut, l’extension utilise icon-faq. Voir également icon-acp, icon-mcp, icon-search, etc. Voir la liste dans styles/colours.css.',
 	'ACP_MULTILINK_FILE'	=> 'Utiliser un fichier graphique',

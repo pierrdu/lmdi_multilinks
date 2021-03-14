@@ -1,28 +1,25 @@
 <?php
 /**
 * @package phpBB Extension - LMDI Multilinks
-* @copyright (c) 2017-2020 Pierre Duhem - LMDI
+* @copyright (c) 2017-2021 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
 
 namespace lmdi\multilinks\acp;
 
-class multilinks_module {
+class multilinks_module
+{
 
 	public $u_action;
-	protected $action;
-	protected $path_helper;
 	protected $ext_path;
-	protected $config_text;
 	protected $table;
 
 	public function main ($id, $mode)
 	{
-		global $language, $config, $db, $template, $request, $phpbb_container, $table_prefix;
+		global $language, $db, $template, $request, $phpbb_container, $table_prefix;
 
-		$this->path_helper = $phpbb_container->get('lmdi.multilinks.multilinks_path_helper');
-		$this->ext_path = $this->path_helper->get_ext_path_web ();
+		$this->ext_path = $phpbb_container->get('lmdi.multilinks.multilinks_path_helper')->get_ext_path_web ();
 
 		$form_name = 'acp_multilinks';
 		$this->table = $table_prefix . 'lmdi_multilinks';
@@ -180,15 +177,15 @@ class multilinks_module {
 			$this->assign_block_vars ('mlpp', 0 /* _PP_ */, $form_name);
 			$this->assign_block_vars ('mlap', 1 /* _AP_ */, $form_name);
 			$pict = $this->ext_path . 'adm/style/icon_trans.gif';
-			$pictno = $this->ext_path . 'adm/style/icon_trans_disabled.gif';
-			$altstr = $language->lang('ACP_ML_TRANSFER');
+			$pict_no = $this->ext_path . 'adm/style/icon_trans_disabled.gif';
+			$alt_str = $language->lang('ACP_ML_TRANSFER');
 			$template->assign_vars(array(
 				'PP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=0', // _PP_
 				'AP_ACTION'		=> $this->u_action . '&amp;action=add&amp;ppap=1', // _AP_
 				'S_CONFIG_PAGE'	=> true,
 				'U_ACTION'		=> $this->u_action,
-				'ICON_ML_TRANSFER'	=> "<img src=\"$pict\" alt=\"$altstr\" title=\"$altstr\" />",
-				'ICON_ML_TRANSNO'	=> "<img src=\"$pictno\" alt=\"$altstr\" title=\"$altstr\" />",
+				'ICON_ML_TRANSFER'	=> "<img src=\"$pict\" alt=\"$alt_str\" title=\"$alt_str\" />",
+				'ICON_ML_TRANSNO'	=> "<img src=\"$pict_no\" alt=\"$alt_str\" title=\"$alt_str\" />",
 				));
 		}
 		add_form_key ($form_name);
@@ -203,12 +200,10 @@ class multilinks_module {
 		$result = $db->sql_query($sql);
 		// Compute the set of ids
 		$idset = array();
-		$cpteur = 0;
 		while ($row = $db->sql_fetchrow($result))
 		{
 			$uid = $row['sort'];
 			$idset[] = $uid;
-			$cpteur++;
 		}
 		// Rewind the result
 		$db->sql_rowseek (0, $result);
@@ -281,13 +276,13 @@ class multilinks_module {
 		$enabled = (int) $request->variable('ml_enabled', false);
 		$guests = (int) $request->variable('ml_guests', false);
 		$blank = (int) $request->variable('ml_blank', false);
-		$usicon = (int) $request->variable('use_icon', false);
-		$usfile = (int) $request->variable('use_file', false);
+		$use_icon = (int) $request->variable('use_icon', false);
+		$use_file = (int) $request->variable('use_file', false);
 		$sort = $uid;
 		// Using icon by default
-		if (!$usfile && !$usicon)
+		if (!$use_file && !$use_icon)
 		{
-			$usicon = 1;
+			$use_icon = 1;
 		}
 		// Default icons if empty
 		if (empty ($icon))
@@ -306,7 +301,7 @@ class multilinks_module {
 		{
 			$sql = "INSERT INTO ". $this->table ."
 				(anchor, title, icon, pict, url, ppap, enabled, blank, usicon, usfile, guests) 
-				VALUES ('$anchor', '$title', '$icon', '$pict', '$url', $ppap, $enabled, $blank, $usicon, $usfile, $guests)";
+				VALUES ('$anchor', '$title', '$icon', '$pict', '$url', $ppap, $enabled, $blank, $use_icon, $use_file, $guests)";
 			$db->sql_query($sql);
 			$uid = $db->sql_nextid();
 			$sql = "UPDATE " . $this->table . " SET sort = $uid WHERE item_id = $uid";
@@ -323,8 +318,8 @@ class multilinks_module {
 				ppap = '$ppap',
 				enabled = $enabled,
 				blank = $blank,
-				usicon = $usicon,
-				usfile = $usfile,
+				usicon = $use_icon,
+				usfile = $use_file,
 				guests = $guests
 				WHERE sort = $uid";
 			$db->sql_query($sql);
