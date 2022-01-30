@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - LMDI Multilinks
-* @copyright (c) 2017-2019 Pierre Duhem - LMDI
+* @copyright (c) 2017-2022 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -18,7 +18,7 @@ class migration_1 extends \phpbb\db\migration\migration
 	}
 
 
-	static public function depends_on()
+	public static function depends_on()
 	{
 		return array('\phpbb\db\migration\data\v310\gold');
 	}

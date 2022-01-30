@@ -2,7 +2,7 @@
 /*
 *
 * @package LMDI Multilinks
-* @copyright (c) 2017-2019 Pierre Duhem - LMDI
+* @copyright (c) 2017-2022 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -36,7 +36,7 @@ class listener implements EventSubscriberInterface
 	}
 
 
-	static public function getSubscribedEvents ()
+	public static function getSubscribedEvents ()
 	{
 		return array(
 			'core.user_setup'	=> 'load_language',
@@ -98,18 +98,15 @@ class listener implements EventSubscriberInterface
 			{
 				continue;
 			}
-			else
-			{
-				$this->template->assign_block_vars($block, array(
-					'NAME'	=> $row['anchor'],
-					'TITLE'	=> $row['title'],
-					'URL'	=> $row['url'],
-					'BLANK'	=> $row['blank']==true ? 'target="_blank"' : '',
-					'ICON'	=> $icon,
-					'FILE'	=> $pict,
-					'S_ICON'	=> $usicon,
-					));
-			}
+			$this->template->assign_block_vars($block, array(
+				'NAME'	=> $row['anchor'],
+				'TITLE'	=> $row['title'],
+				'URL'	=> $row['url'],
+				'BLANK'	=> $row['blank'] ? 'target="_blank"' : '',
+				'ICON'	=> $icon,
+				'FILE'	=> $pict,
+				'S_ICON'	=> $usicon,
+				));
 		}
 		$this->db->sql_freeresult($result);
 	}

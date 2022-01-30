@@ -3,7 +3,7 @@
 *
 * LMDI Multilinks extension for the phpBB Forum Software package.
 *
-* @copyright (c) 2017-2019 Pierre Duhem — LMDI
+* @copyright (c) 2017-2022 Pierre Duhem — LMDI
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
 */

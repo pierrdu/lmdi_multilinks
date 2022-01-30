@@ -1,7 +1,7 @@
 <?php
 /**
 * @package phpBB Extension - LMDI Multilinks
-* @copyright (c) 2017-2021 Pierre Duhem - LMDI
+* @copyright (c) 2017-2022 Pierre Duhem - LMDI
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -25,8 +25,6 @@ class multilinks_module
 		$this->table = $table_prefix . 'lmdi_multilinks';
 
 		$language->add_lang ('acp_multilinks', 'lmdi/multilinks');
-		$this->tpl_name = 'acp_multilinks_body';
-		$this->page_title = $language->lang('ACP_MULTILINKS_TITLE');
 
 		$ppap = $request->variable ('ppap', 0); // false = prepend, true = append
 
