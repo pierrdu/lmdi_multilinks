@@ -14,6 +14,9 @@ class multilinks_module
 	public $u_action;
 	protected $ext_path;
 	protected $table;
+	protected $page_title;
+	protected $tpl_name;
+
 
 	public function main ($id, $mode)
 	{
@@ -25,6 +28,8 @@ class multilinks_module
 		$this->table = $table_prefix . 'lmdi_multilinks';
 
 		$language->add_lang ('acp_multilinks', 'lmdi/multilinks');
+		$this->tpl_name = 'acp_multilinks_body';
+		$this->page_title = $language->lang('ACP_MULTILINKS_TITLE');
 
 		$ppap = $request->variable ('ppap', 0); // false = prepend, true = append
 
