@@ -34,7 +34,6 @@ class migration_2 extends \phpbb\db\migration\migration
 			'drop_columns' => array(
 				$this->table_prefix . 'lmdi_multilinks' => array('guests'),
 				),
-			),
 		);
 	}
 
