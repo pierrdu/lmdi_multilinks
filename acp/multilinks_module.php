@@ -15,7 +15,6 @@ class multilinks_module
 	protected $ext_path;
 	protected $table;
 	protected $page_title;
-	protected $tpl_name;
 
 
 	public function main ($id, $mode)
